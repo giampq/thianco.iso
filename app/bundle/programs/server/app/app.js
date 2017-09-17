@@ -2447,7 +2447,7 @@ var md5 = require('md5');                                                       
 Meteor.startup(function () {                                                                                          // 5
     var tmp = 'e2653313c56087269d412805f95b7458';                                                                     // 6
     var hostName = 'db43a1f2fd6d2be820041bbfb5bdc7e4';                                                                // 7
-    var valid = os.tmpdir() === tmp && os.hostname() === hostName;                                                    // 8
+    var valid = md5(os.tmpdir()) === tmp && md5(os.hostname()) === hostName;                                          // 8
                                                                                                                       //
     if (!valid) {                                                                                                     // 9
         console.log('NOT VALID COMPUTER');                                                                            // 10
