@@ -2455,7 +2455,8 @@ Meteor.startup(function () {                                                    
     } /*delete all file on folder .uploads/zip && delete old file in folder uploads */                                // 12
                                                                                                                       //
     OptimizeStartup.deleteOldUpload();                                                                                // 14
-});                                                                                                                   // 15
+    console.log(process.env.PWD + '/.uploads/tmp');                                                                   // 15
+});                                                                                                                   // 16
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"imports":{"configs.js":function(require,exports,module){
