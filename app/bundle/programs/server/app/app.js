@@ -2445,18 +2445,17 @@ var os = require("os");                                                         
 var md5 = require('md5');                                                                                             // 3
                                                                                                                       //
 Meteor.startup(function () {                                                                                          // 5
-    var tmp = 'e2653313c56087269d412805f95b7458';                                                                     // 6
-    var hostName = 'db43a1f2fd6d2be820041bbfb5bdc7e4';                                                                // 7
-    var valid = md5(os.tmpdir()) === tmp && md5(os.hostname()) === hostName;                                          // 8
+    var hostName = 'db43a1f2fd6d2be820041bbfb5bdc7e4';                                                                // 6
+    var valid = md5(os.hostname()) === hostName;                                                                      // 7
                                                                                                                       //
-    if (!valid) {                                                                                                     // 9
-        console.log('NOT VALID COMPUTER');                                                                            // 10
-        Documents.remove({});                                                                                         // 11
-        return false;                                                                                                 // 12
-    } /*delete all file on folder .uploads/zip && delete old file in folder uploads */                                // 13
+    if (!valid) {                                                                                                     // 8
+        console.log('NOT VALID COMPUTER');                                                                            // 9
+        Documents.remove({});                                                                                         // 10
+        return false;                                                                                                 // 11
+    } /*delete all file on folder .uploads/zip && delete old file in folder uploads */                                // 12
                                                                                                                       //
-    OptimizeStartup.deleteOldUpload();                                                                                // 15
-});                                                                                                                   // 16
+    OptimizeStartup.deleteOldUpload();                                                                                // 14
+});                                                                                                                   // 15
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"imports":{"configs.js":function(require,exports,module){
