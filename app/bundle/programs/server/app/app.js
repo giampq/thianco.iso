@@ -1490,7 +1490,7 @@ Uploads.allow({                                                                 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                       //
 Accounts.config({                                                                                                     // 1
-    forbidClientAccountCreation: false                                                                                // 2
+    forbidClientAccountCreation: true                                                                                 // 2
 });                                                                                                                   // 1
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2123,6 +2123,28 @@ Uploads.find({}).observeChanges({                                               
         }                                                                                                             // 18
     }                                                                                                                 // 19
 });                                                                                                                   // 3
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}},"init-user":{"init.js":function(){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                    //
+// server/init-user/init.js                                                                                           //
+//                                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                      //
+var email = 'ngocns@thianco.com.vn';                                                                                  // 1
+var username = 'ngocns';                                                                                              // 2
+var accountWithEmail = Accounts.findUserByEmail(email);                                                               // 3
+                                                                                                                      //
+if (!accountWithEmail) {                                                                                              // 4
+    /* create new user */var user = {                                                                                 // 5
+        username: username,                                                                                           // 7
+        email: email,                                                                                                 // 8
+        password: Package.sha.SHA256("123")                                                                           // 9
+    };                                                                                                                // 6
+    Accounts.createUser(user);                                                                                        // 11
+}                                                                                                                     // 12
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"publications":{"branchs.js":function(){
@@ -3103,6 +3125,7 @@ require("./server/compress-and-download/compress.and.download.js");
 require("./server/config-upload-server/init.js");
 require("./server/database-observe/document.js");
 require("./server/database-observe/uploads.js");
+require("./server/init-user/init.js");
 require("./server/publications/branchs.js");
 require("./server/publications/categorys.js");
 require("./server/publications/document-attachment.js");
