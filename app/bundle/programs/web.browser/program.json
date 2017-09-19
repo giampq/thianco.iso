@@ -2,22 +2,22 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "5be8a3e2268b391bba80279169460e213b2ffe1a.js",
+      "path": "2b56ac07428ee601aff895ba888e0dc7941d58d6.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/5be8a3e2268b391bba80279169460e213b2ffe1a.js?meteor_js_resource=true",
-      "size": 1266627,
-      "hash": "5be8a3e2268b391bba80279169460e213b2ffe1a"
+      "url": "/2b56ac07428ee601aff895ba888e0dc7941d58d6.js?meteor_js_resource=true",
+      "size": 1266745,
+      "hash": "2b56ac07428ee601aff895ba888e0dc7941d58d6"
     },
     {
-      "path": "5be8a3e2268b391bba80279169460e213b2ffe1a.stats.json",
+      "path": "2b56ac07428ee601aff895ba888e0dc7941d58d6.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/5be8a3e2268b391bba80279169460e213b2ffe1a.stats.json?meteor_js_resource=true",
+      "url": "/2b56ac07428ee601aff895ba888e0dc7941d58d6.stats.json?meteor_js_resource=true",
       "size": 32197,
-      "hash": "7f6b566629bb7814a51e05146726512841ec50c1"
+      "hash": "769bcfe200eddd57a36bd7cc52d41b84de1d7941"
     },
     {
       "path": "16d09e1c58baf1d014d41893a3af23d42b80b34d.css",
@@ -288,6 +288,33 @@
       "url": "/packages/mfactory_admin-lte/css/skins/skin-yellow.min.css",
       "size": 3075,
       "hash": "d82143e66fb6656c922bae4a01334f435a30d70e"
+    },
+    {
+      "path": "app/cariso.jpg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cariso.jpg",
+      "size": 301264,
+      "hash": "c6ba8ab756b2a54251eec79dba368b25c9774e4f"
+    },
+    {
+      "path": "app/iso.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/iso.png",
+      "size": 75803,
+      "hash": "b05ce8c59827378c54b80ebeee8c00ddf38475ea"
+    },
+    {
+      "path": "app/main.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/main.png",
+      "size": 653478,
+      "hash": "5972391cc44f1ad132c10a91b4a7f8ef57e32057"
     },
     {
       "path": "app/img/file.svg",

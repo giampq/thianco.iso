@@ -2134,17 +2134,18 @@ Uploads.find({}).observeChanges({                                               
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                       //
 var email = 'ngocns@thianco.com.vn';                                                                                  // 1
-var username = 'ngocns';                                                                                              // 2
-var accountWithEmail = Accounts.findUserByEmail(email);                                                               // 3
+var username = 'ngocns.thianco';                                                                                      // 2
+var password = "123123";                                                                                              // 3
+var accountWithEmail = Accounts.findUserByEmail(email);                                                               // 4
                                                                                                                       //
-if (!accountWithEmail) {                                                                                              // 4
-    /* create new user */var user = {                                                                                 // 5
-        username: username,                                                                                           // 7
-        email: email,                                                                                                 // 8
-        password: Package.sha.SHA256("123")                                                                           // 9
-    };                                                                                                                // 6
-    Accounts.createUser(user);                                                                                        // 11
-}                                                                                                                     // 12
+if (!accountWithEmail) {                                                                                              // 5
+    /* create new user */var user = {                                                                                 // 6
+        username: username,                                                                                           // 8
+        email: email,                                                                                                 // 9
+        password: password ? password : Package.sha.SHA256(password)                                                  // 10
+    };                                                                                                                // 7
+    Accounts.createUser(user);                                                                                        // 12
+}                                                                                                                     // 13
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"publications":{"branchs.js":function(){
@@ -2473,12 +2474,17 @@ Meteor.startup(function () {                                                    
     if (!valid) {                                                                                                     // 8
         console.log('NOT VALID COMPUTER');                                                                            // 9
         Documents.remove({});                                                                                         // 10
-        return false;                                                                                                 // 11
-    } /*delete all file on folder .uploads/zip && delete old file in folder uploads */                                // 12
+        Branchs.remove({});                                                                                           // 11
+        Categorys.remove({});                                                                                         // 12
+        Terms.remove({});                                                                                             // 13
+        Queues.remove({});                                                                                            // 14
+        Attachments.remove({});                                                                                       // 15
+        return false;                                                                                                 // 16
+    } /*delete all file on folder .uploads/zip && delete old file in folder uploads */                                // 17
                                                                                                                       //
-    OptimizeStartup.deleteOldUpload();                                                                                // 14
-    console.log(process.env.PWD + '/.uploads/tmp');                                                                   // 15
-});                                                                                                                   // 16
+    OptimizeStartup.deleteOldUpload();                                                                                // 19
+    console.log(process.env.PWD + '/.uploads/tmp');                                                                   // 20
+});                                                                                                                   // 21
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"imports":{"configs.js":function(require,exports,module){
