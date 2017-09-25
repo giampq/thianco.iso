@@ -3,8 +3,8 @@
     "name": "standard-minifier-js",
     "version": "2.1.1"
   },
-  "totalMinifiedBytes": 1266745,
-  "totalMinifiedGzipBytes": 347573,
+  "totalMinifiedBytes": 1291433,
+  "totalMinifiedGzipBytes": 350036,
   "minifiedBytesByPackage": {
     "packages/meteor.js": 8650,
     "packages/meteor-base.js": 68,
@@ -884,7 +884,7 @@
     "packages/autoupdate.js": 1998,
     "packages/global-imports.js": 1279,
     "app/app.js": [
-      197046,
+      221734,
       {
         "client": {
           "templates": {
@@ -896,7 +896,7 @@
                 },
                 "template.footer.js": 403,
                 "template.header.js": 2086,
-                "template.sidebar.js": 5650,
+                "template.sidebar.js": 6587,
                 "footer.js": 244
               },
               "template.layout.js": 2880
@@ -914,8 +914,8 @@
               "addfav.js": 679
             },
             "alldocuments": {
-              "template.alldocuments.js": 11679,
-              "alldocuments.js": 3336
+              "template.alldocuments.js": 12624,
+              "alldocuments.js": 3414
             },
             "allfavs": {
               "template.allfavs.js": 4128,
@@ -939,12 +939,12 @@
               "documentremind.js": 391
             },
             "documents": {
-              "template.adddocuments.js": 10754,
-              "adddocuments.js": 2825
+              "template.adddocuments.js": 11949,
+              "adddocuments.js": 2921
             },
             "editdoc": {
-              "template.editdoc.js": 13502,
-              "editdoc.js": 3446
+              "template.editdoc.js": 15212,
+              "editdoc.js": 3816
             },
             "editfav": {
               "template.editfav.js": 1825,
@@ -958,6 +958,10 @@
               "template.favorites.js": 5292,
               "favorites.js": 1994
             },
+            "hashtags": {
+              "template.hashtags.js": 5275,
+              "hashtags.js": 1999
+            },
             "loading": {
               "template.loading.js": 170
             },
@@ -966,12 +970,16 @@
               "notfound.js": 492
             },
             "printqueues": {
-              "template.printqueues.js": 3627,
+              "template.printqueues.js": 3684,
               "printqueues.js": 1337
             },
             "queues": {
               "template.queues.js": 2605,
               "queues.js": 484
+            },
+            "quickadddoc": {
+              "template.quickadddoc.js": 5595,
+              "quickadddoc.js": 1500
             },
             "reminds": {
               "template.reminds.js": 5867,
@@ -982,7 +990,7 @@
               "terms.js": 2038
             },
             "uploadinfo": {
-              "template.uploadinfo.js": 2161,
+              "template.uploadinfo.js": 2506,
               "uploadinfo.js": 902
             }
           },
@@ -1000,7 +1008,7 @@
             "config.js": 184
           },
           "helpers": {
-            "helpers.js": 2030
+            "helpers.js": 2350
           }
         },
         "lib": {
@@ -1011,8 +1019,9 @@
             "document.attachment.js": 535,
             "document.remind.js": 66,
             "documents.in.remind.js": 73,
-            "documents.js": 4280,
+            "documents.js": 5656,
             "favorites.js": 1481,
+            "hashtags.js": 1773,
             "iddoc.in.fav.js": 1744,
             "items.js": 47,
             "queue.js": 1098,
@@ -1025,14 +1034,14 @@
             "config.js": 61
           },
           "search-api": {
-            "api-find-document.js": 1999
+            "api-find-document.js": 2197
           },
           "constants.js": 92,
-          "router.js": 2824,
+          "router.js": 3348,
           "main.js": 12
         },
         "imports": {
-          "configs.js": 610,
+          "configs.js": 606,
           "optimize-rs-search.js": 436,
           "string-helpers.js": 8544
         }

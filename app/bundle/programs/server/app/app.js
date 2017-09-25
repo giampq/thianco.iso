@@ -450,23 +450,23 @@ var StrFunc = require('../../imports/string-helpers');                          
                                                                                                                       //
 if (Meteor.isServer) {                                                                                                // 6
     var deleteFolderRecursive = function (path, fs) {                                                                 // 6
-        try {                                                                                                         // 176
-            if (fs.existsSync(path)) {                                                                                // 177
-                fs.readdirSync(path).forEach(function (file, index) {                                                 // 178
-                    var curPath = path + "/" + file;                                                                  // 179
+        try {                                                                                                         // 179
+            if (fs.existsSync(path)) {                                                                                // 180
+                fs.readdirSync(path).forEach(function (file, index) {                                                 // 181
+                    var curPath = path + "/" + file;                                                                  // 182
                                                                                                                       //
-                    if (fs.lstatSync(curPath).isDirectory()) {                                                        // 180
-                        // recurse                                                                                    // 180
-                        deleteFolderRecursive(curPath, fs);                                                           // 181
-                    } else {                                                                                          // 182
-                        // delete file                                                                                // 182
-                        fs.unlinkSync(curPath);                                                                       // 183
-                    }                                                                                                 // 184
-                });                                                                                                   // 185
-                fs.rmdirSync(path);                                                                                   // 186
-            }                                                                                                         // 187
-        } catch (e) {}                                                                                                // 188
-    };                                                                                                                // 189
+                    if (fs.lstatSync(curPath).isDirectory()) {                                                        // 183
+                        // recurse                                                                                    // 183
+                        deleteFolderRecursive(curPath, fs);                                                           // 184
+                    } else {                                                                                          // 185
+                        // delete file                                                                                // 185
+                        fs.unlinkSync(curPath);                                                                       // 186
+                    }                                                                                                 // 187
+                });                                                                                                   // 188
+                fs.rmdirSync(path);                                                                                   // 189
+            }                                                                                                         // 190
+        } catch (e) {}                                                                                                // 191
+    };                                                                                                                // 192
                                                                                                                       //
     Meteor.methods({                                                                                                  // 7
         addNewDocument: function () {                                                                                 // 8
@@ -478,73 +478,75 @@ if (Meteor.isServer) {                                                          
                             switch (_context.prev = _context.next) {                                                  // 8
                                 case 0:                                                                               // 8
                                     check(Meteor.userId(), String);                                                   // 9
-                                    check(document, {                                                                 // 10
-                                        branch: Match.Optional(Match.OneOf(undefined, null, Array)),                  // 11
-                                        category: Match.Optional(Match.OneOf(undefined, null, String)),               // 12
-                                        name: String,                                                                 // 13
-                                        document_number: Match.Optional(Match.OneOf(undefined, null, String)),        // 14
-                                        term: Match.Optional(Match.OneOf(undefined, null, Array)),                    // 15
-                                        note: Match.Optional(Match.OneOf(undefined, null, String)),                   // 16
-                                        startStamp: Match.Optional(Match.OneOf(undefined, null, Number)),             // 17
-                                        dueStamp: Match.Optional(Match.OneOf(undefined, null, Number)),               // 18
-                                        page_uuid: String,                                                            // 19
-                                        every: Number,                                                                // 20
-                                        unit: String,                                                                 // 21
-                                        firstAttachment: Match.Optional(Match.OneOf(undefined, null, String))         // 22
-                                    });                                                                               // 10
-                                    user = Meteor.user();                                                             // 24
-                                    document = _.extend(document, {                                                   // 25
-                                        id_owner: user._id,                                                           // 26
-                                        date_create: new Date().getTime(),                                            // 27
-                                        name_search: StrFunc.strWithoutSpec(document.name),                           // 28
-                                        document_number_search: StrFunc.strWithoutSpec(document.document_number)      // 29
-                                    });                                                                               // 25
-                                    page_uuid = document.page_uuid; // create new document without attachments        // 31
+                                    console.log(document);                                                            // 10
+                                    check(document, {                                                                 // 11
+                                        branch: Match.Optional(Match.OneOf(undefined, null, Array)),                  // 12
+                                        category: Match.Optional(Match.OneOf(undefined, null, String)),               // 13
+                                        hashtags: Match.Optional(Match.OneOf(undefined, null, Array)),                // 14
+                                        name: String,                                                                 // 15
+                                        document_number: Match.Optional(Match.OneOf(undefined, null, String)),        // 16
+                                        term: Match.Optional(Match.OneOf(undefined, null, Array)),                    // 17
+                                        note: Match.Optional(Match.OneOf(undefined, null, String)),                   // 18
+                                        startStamp: Match.Optional(Match.OneOf(undefined, null, Number)),             // 19
+                                        dueStamp: Match.Optional(Match.OneOf(undefined, null, Number)),               // 20
+                                        page_uuid: String,                                                            // 21
+                                        every: Number,                                                                // 22
+                                        unit: String,                                                                 // 23
+                                        firstAttachment: Match.Optional(Match.OneOf(undefined, null, String))         // 24
+                                    });                                                                               // 11
+                                    user = Meteor.user();                                                             // 26
+                                    document = _.extend(document, {                                                   // 27
+                                        id_owner: user._id,                                                           // 28
+                                        date_create: new Date().getTime(),                                            // 29
+                                        name_search: StrFunc.strWithoutSpec(document.name),                           // 30
+                                        document_number_search: StrFunc.strWithoutSpec(document.document_number)      // 31
+                                    });                                                                               // 27
+                                    page_uuid = document.page_uuid; // create new document without attachments        // 33
                                                                                                                       //
-                                    _context.next = 7;                                                                // 8
+                                    _context.next = 8;                                                                // 8
                                     return _regenerator2.default.awrap(Documents.insert(document));                   // 8
                                                                                                                       //
-                                case 7:                                                                               // 8
-                                    idDocument = _context.sent;                                                       // 33
-                                    folderUpload = process.env.PWD + '/.uploads/';                                    // 34
-                                    base = process.env.PWD + '/.uploads/' + idDocument;                               // 35
-                                    mkdirp = require('mkdirp');                                                       // 36
-                                    Fiber = require('fibers');                                                        // 37
-                                    fs = require('fs-extra');                                                         // 38
-                                    mkdirp(base, function (err) {                                                     // 39
-                                        if (err) {                                                                    // 40
-                                            console.log(err);                                                         // 41
-                                        } else {                                                                      // 42
+                                case 8:                                                                               // 8
+                                    idDocument = _context.sent;                                                       // 35
+                                    folderUpload = process.env.PWD + '/.uploads/';                                    // 36
+                                    base = process.env.PWD + '/.uploads/' + idDocument;                               // 37
+                                    mkdirp = require('mkdirp');                                                       // 38
+                                    Fiber = require('fibers');                                                        // 39
+                                    fs = require('fs-extra');                                                         // 40
+                                    mkdirp(base, function (err) {                                                     // 41
+                                        if (err) {                                                                    // 42
+                                            console.log(err);                                                         // 43
+                                        } else {                                                                      // 44
                                             console.log('create new folder: ' + base); //move attachment from tmp to documents-folder
                                                                                                                       //
-                                            Fiber(function () {                                                       // 45
-                                                var folderUploadReplace = '/upload/';                                 // 46
-                                                Uploads.find({                                                        // 47
-                                                    'uuid_page': page_uuid                                            // 47
-                                                }).fetch().map(function (el, idx) {                                   // 47
-                                                    var pathFileUpload = folderUpload + el.path;                      // 48
-                                                    var newPathFile = base + '/' + el.new_name;                       // 49
-                                                    fs.copy(pathFileUpload, newPathFile).then(function () {           // 50
-                                                        // save new file to attachment                                // 52
-                                                        var attachment = el;                                          // 53
-                                                        var oldImageId = attachment._id;                              // 54
-                                                        delete attachment._id;                                        // 55
-                                                        attachment.pathReactive = idDocument + '/' + el.path;         // 56
-                                                        attachment.idDocument = idDocument;                           // 57
-                                                        Meteor.call('addNewAttachment', attachment);                  // 58
-                                                        Meteor.call('deleteFile', {                                   // 59
-                                                            _id: oldImageId                                           // 59
-                                                        });                                                           // 59
-                                                    }).catch(function (err) {                                         // 60
-                                                        return console.error(err);                                    // 60
-                                                    });                                                               // 60
-                                                });                                                                   // 61
-                                            }).run();                                                                 // 62
-                                        } // path exists unless there was an error                                    // 63
+                                            Fiber(function () {                                                       // 47
+                                                var folderUploadReplace = '/upload/';                                 // 48
+                                                Uploads.find({                                                        // 49
+                                                    'uuid_page': page_uuid                                            // 49
+                                                }).fetch().map(function (el, idx) {                                   // 49
+                                                    var pathFileUpload = folderUpload + el.path;                      // 50
+                                                    var newPathFile = base + '/' + el.new_name;                       // 51
+                                                    fs.copy(pathFileUpload, newPathFile).then(function () {           // 52
+                                                        // save new file to attachment                                // 54
+                                                        var attachment = el;                                          // 55
+                                                        var oldImageId = attachment._id;                              // 56
+                                                        delete attachment._id;                                        // 57
+                                                        attachment.pathReactive = idDocument + '/' + el.path;         // 58
+                                                        attachment.idDocument = idDocument;                           // 59
+                                                        Meteor.call('addNewAttachment', attachment);                  // 60
+                                                        Meteor.call('deleteFile', {                                   // 61
+                                                            _id: oldImageId                                           // 61
+                                                        });                                                           // 61
+                                                    }).catch(function (err) {                                         // 62
+                                                        return console.error(err);                                    // 62
+                                                    });                                                               // 62
+                                                });                                                                   // 63
+                                            }).run();                                                                 // 64
+                                        } // path exists unless there was an error                                    // 65
                                                                                                                       //
-                                    });                                                                               // 65
+                                    });                                                                               // 67
                                                                                                                       //
-                                case 14:                                                                              // 8
+                                case 15:                                                                              // 8
                                 case "end":                                                                           // 8
                                     return _context.stop();                                                           // 8
                             }                                                                                         // 8
@@ -558,191 +560,284 @@ if (Meteor.isServer) {                                                          
             return _callee;                                                                                           // 8
         }()                                                                                                           // 8
     });                                                                                                               // 7
-    Meteor.methods({                                                                                                  // 69
-        updateDocument: function () {                                                                                 // 70
-            function _callee2(document) {                                                                             // 70
-                var idDoc;                                                                                            // 70
-                return _regenerator2.default.async(function () {                                                      // 70
-                    function _callee2$(_context2) {                                                                   // 70
-                        while (1) {                                                                                   // 70
-                            switch (_context2.prev = _context2.next) {                                                // 70
-                                case 0:                                                                               // 70
-                                    check(Meteor.userId(), String);                                                   // 71
-                                    check(document, {                                                                 // 72
-                                        _id: String,                                                                  // 73
-                                        branch: Match.Optional(Match.OneOf(undefined, null, Array)),                  // 74
-                                        category: Match.Optional(Match.OneOf(undefined, null, String)),               // 75
-                                        name: String,                                                                 // 76
-                                        document_number: Match.Optional(Match.OneOf(undefined, null, String)),        // 77
-                                        term: Match.Optional(Match.OneOf(undefined, null, Array)),                    // 78
-                                        note: Match.Optional(Match.OneOf(undefined, null, String)),                   // 79
-                                        startStamp: Match.Optional(Match.OneOf(undefined, null, Number)),             // 80
-                                        dueStamp: Match.Optional(Match.OneOf(undefined, null, Number)),               // 81
-                                        page_uuid: String,                                                            // 82
-                                        every: Number,                                                                // 83
-                                        unit: String,                                                                 // 84
-                                        firstAttachment: Match.Optional(Match.OneOf(undefined, null, String))         // 85
-                                    });                                                                               // 72
-                                    user = Meteor.user();                                                             // 87
-                                    document.name_search = StrFunc.strWithoutSpec(document.name);                     // 88
+    Meteor.methods({                                                                                                  // 71
+        updateDocument: function () {                                                                                 // 72
+            function _callee2(document) {                                                                             // 72
+                var idDoc;                                                                                            // 72
+                return _regenerator2.default.async(function () {                                                      // 72
+                    function _callee2$(_context2) {                                                                   // 72
+                        while (1) {                                                                                   // 72
+                            switch (_context2.prev = _context2.next) {                                                // 72
+                                case 0:                                                                               // 72
+                                    check(Meteor.userId(), String);                                                   // 73
+                                    check(document, {                                                                 // 74
+                                        _id: String,                                                                  // 75
+                                        branch: Match.Optional(Match.OneOf(undefined, null, Array)),                  // 76
+                                        category: Match.Optional(Match.OneOf(undefined, null, String)),               // 77
+                                        hashtags: Match.Optional(Match.OneOf(undefined, null, Array)),                // 78
+                                        name: String,                                                                 // 79
+                                        document_number: Match.Optional(Match.OneOf(undefined, null, String)),        // 80
+                                        term: Match.Optional(Match.OneOf(undefined, null, Array)),                    // 81
+                                        note: Match.Optional(Match.OneOf(undefined, null, String)),                   // 82
+                                        startStamp: Match.Optional(Match.OneOf(undefined, null, Number)),             // 83
+                                        dueStamp: Match.Optional(Match.OneOf(undefined, null, Number)),               // 84
+                                        page_uuid: String,                                                            // 85
+                                        every: Number,                                                                // 86
+                                        unit: String,                                                                 // 87
+                                        firstAttachment: Match.Optional(Match.OneOf(undefined, null, String))         // 88
+                                    });                                                                               // 74
+                                    user = Meteor.user();                                                             // 90
+                                    document.name_search = StrFunc.strWithoutSpec(document.name);                     // 91
                                     document.document_number_search = StrFunc.strWithoutSpec(document.document_number);
-                                    document = _.extend(document, {                                                   // 90
-                                        date_update: new Date().getTime()                                             // 91
-                                    });                                                                               // 90
-                                    idDoc = document._id;                                                             // 93
-                                    delete document._id;                                                              // 94
-                                    _context2.next = 10;                                                              // 70
-                                    return _regenerator2.default.awrap(Documents.update(idDoc, {                      // 70
-                                        $set: document                                                                // 96
-                                    }));                                                                              // 95
+                                    document = _.extend(document, {                                                   // 93
+                                        date_update: new Date().getTime()                                             // 94
+                                    });                                                                               // 93
+                                    idDoc = document._id;                                                             // 96
+                                    delete document._id;                                                              // 97
+                                    _context2.next = 10;                                                              // 72
+                                    return _regenerator2.default.awrap(Documents.update(idDoc, {                      // 72
+                                        $set: document                                                                // 99
+                                    }));                                                                              // 98
                                                                                                                       //
-                                case 10:                                                                              // 70
-                                    return _context2.abrupt("return", _context2.sent);                                // 70
+                                case 10:                                                                              // 72
+                                    return _context2.abrupt("return", _context2.sent);                                // 72
                                                                                                                       //
-                                case 11:                                                                              // 70
-                                case "end":                                                                           // 70
-                                    return _context2.stop();                                                          // 70
-                            }                                                                                         // 70
-                        }                                                                                             // 70
-                    }                                                                                                 // 70
+                                case 11:                                                                              // 72
+                                case "end":                                                                           // 72
+                                    return _context2.stop();                                                          // 72
+                            }                                                                                         // 72
+                        }                                                                                             // 72
+                    }                                                                                                 // 72
                                                                                                                       //
-                    return _callee2$;                                                                                 // 70
-                }(), null, this);                                                                                     // 70
-            }                                                                                                         // 70
+                    return _callee2$;                                                                                 // 72
+                }(), null, this);                                                                                     // 72
+            }                                                                                                         // 72
                                                                                                                       //
-            return _callee2;                                                                                          // 70
-        }()                                                                                                           // 70
-    });                                                                                                               // 69
-    Meteor.methods({                                                                                                  // 102
-        setDefaultDocumentWithIdDoc: function () {                                                                    // 103
-            function _callee3(data) {                                                                                 // 103
-                var idDoc, doc;                                                                                       // 103
-                return _regenerator2.default.async(function () {                                                      // 103
-                    function _callee3$(_context3) {                                                                   // 103
-                        while (1) {                                                                                   // 103
-                            switch (_context3.prev = _context3.next) {                                                // 103
-                                case 0:                                                                               // 103
-                                    check(Meteor.userId(), String);                                                   // 104
-                                    check(data, {                                                                     // 105
-                                        _id: String,                                                                  // 106
-                                        pageUUID: String,                                                             // 107
-                                        idDocument: String                                                            // 108
-                                    }); // _id is attachment id                                                       // 105
+            return _callee2;                                                                                          // 72
+        }()                                                                                                           // 72
+    });                                                                                                               // 71
+    Meteor.methods({                                                                                                  // 105
+        setDefaultDocumentWithIdDoc: function () {                                                                    // 106
+            function _callee3(data) {                                                                                 // 106
+                var idDoc, doc;                                                                                       // 106
+                return _regenerator2.default.async(function () {                                                      // 106
+                    function _callee3$(_context3) {                                                                   // 106
+                        while (1) {                                                                                   // 106
+                            switch (_context3.prev = _context3.next) {                                                // 106
+                                case 0:                                                                               // 106
+                                    check(Meteor.userId(), String);                                                   // 107
+                                    check(data, {                                                                     // 108
+                                        _id: String,                                                                  // 109
+                                        pageUUID: String,                                                             // 110
+                                        idDocument: String                                                            // 111
+                                    }); // _id is attachment id                                                       // 108
                                                                                                                       //
-                                    idDoc = data.idDocument;                                                          // 111
-                                    doc = Documents.findOne(idDoc);                                                   // 112
+                                    idDoc = data.idDocument;                                                          // 114
+                                    doc = Documents.findOne(idDoc);                                                   // 115
                                                                                                                       //
-                                    if (doc) {                                                                        // 113
-                                        Attachments.update({                                                          // 114
-                                            idDocument: idDoc                                                         // 114
-                                        }, {                                                                          // 114
-                                            $set: {                                                                   // 115
-                                                isDefault: false                                                      // 116
-                                            }                                                                         // 115
-                                        }, {                                                                          // 114
-                                            multi: true                                                               // 118
-                                        });                                                                           // 118
-                                        Attachments.update(data._id, {                                                // 119
-                                            $set: {                                                                   // 120
-                                                isDefault: true                                                       // 121
-                                            }                                                                         // 120
-                                        });                                                                           // 119
-                                    }                                                                                 // 124
+                                    if (doc) {                                                                        // 116
+                                        Attachments.update({                                                          // 117
+                                            idDocument: idDoc                                                         // 117
+                                        }, {                                                                          // 117
+                                            $set: {                                                                   // 118
+                                                isDefault: false                                                      // 119
+                                            }                                                                         // 118
+                                        }, {                                                                          // 117
+                                            multi: true                                                               // 121
+                                        });                                                                           // 121
+                                        Attachments.update(data._id, {                                                // 122
+                                            $set: {                                                                   // 123
+                                                isDefault: true                                                       // 124
+                                            }                                                                         // 123
+                                        });                                                                           // 122
+                                    }                                                                                 // 127
                                                                                                                       //
-                                case 5:                                                                               // 103
-                                case "end":                                                                           // 103
-                                    return _context3.stop();                                                          // 103
-                            }                                                                                         // 103
-                        }                                                                                             // 103
-                    }                                                                                                 // 103
+                                case 5:                                                                               // 106
+                                case "end":                                                                           // 106
+                                    return _context3.stop();                                                          // 106
+                            }                                                                                         // 106
+                        }                                                                                             // 106
+                    }                                                                                                 // 106
                                                                                                                       //
-                    return _callee3$;                                                                                 // 103
-                }(), null, this);                                                                                     // 103
-            }                                                                                                         // 103
+                    return _callee3$;                                                                                 // 106
+                }(), null, this);                                                                                     // 106
+            }                                                                                                         // 106
                                                                                                                       //
-            return _callee3;                                                                                          // 103
-        }()                                                                                                           // 103
-    });                                                                                                               // 102
-    Meteor.methods({                                                                                                  // 129
-        setDefaultDocumentPageUUID: function () {                                                                     // 130
-            function _callee4(data) {                                                                                 // 130
-                return _regenerator2.default.async(function () {                                                      // 130
-                    function _callee4$(_context4) {                                                                   // 130
-                        while (1) {                                                                                   // 130
-                            switch (_context4.prev = _context4.next) {                                                // 130
-                                case 0:                                                                               // 130
-                                    check(Meteor.userId(), String);                                                   // 131
-                                    check(data, {                                                                     // 132
-                                        _id: String,                                                                  // 133
-                                        pageUUID: String                                                              // 134
-                                    });                                                                               // 132
-                                    Uploads.update({                                                                  // 136
-                                        uuid_page: data.pageUUID                                                      // 136
-                                    }, {                                                                              // 136
-                                        $set: {                                                                       // 137
-                                            isDefault: false                                                          // 138
-                                        }                                                                             // 137
-                                    }, {                                                                              // 136
-                                        multi: true                                                                   // 140
-                                    });                                                                               // 140
-                                    Uploads.update(data._id, {                                                        // 141
-                                        $set: {                                                                       // 142
-                                            isDefault: true                                                           // 143
-                                        }                                                                             // 142
-                                    });                                                                               // 141
+            return _callee3;                                                                                          // 106
+        }()                                                                                                           // 106
+    });                                                                                                               // 105
+    Meteor.methods({                                                                                                  // 132
+        setDefaultDocumentPageUUID: function () {                                                                     // 133
+            function _callee4(data) {                                                                                 // 133
+                return _regenerator2.default.async(function () {                                                      // 133
+                    function _callee4$(_context4) {                                                                   // 133
+                        while (1) {                                                                                   // 133
+                            switch (_context4.prev = _context4.next) {                                                // 133
+                                case 0:                                                                               // 133
+                                    check(Meteor.userId(), String);                                                   // 134
+                                    check(data, {                                                                     // 135
+                                        _id: String,                                                                  // 136
+                                        pageUUID: String                                                              // 137
+                                    });                                                                               // 135
+                                    Uploads.update({                                                                  // 139
+                                        uuid_page: data.pageUUID                                                      // 139
+                                    }, {                                                                              // 139
+                                        $set: {                                                                       // 140
+                                            isDefault: false                                                          // 141
+                                        }                                                                             // 140
+                                    }, {                                                                              // 139
+                                        multi: true                                                                   // 143
+                                    });                                                                               // 143
+                                    Uploads.update(data._id, {                                                        // 144
+                                        $set: {                                                                       // 145
+                                            isDefault: true                                                           // 146
+                                        }                                                                             // 145
+                                    });                                                                               // 144
                                                                                                                       //
-                                case 4:                                                                               // 130
-                                case "end":                                                                           // 130
-                                    return _context4.stop();                                                          // 130
-                            }                                                                                         // 130
-                        }                                                                                             // 130
-                    }                                                                                                 // 130
+                                case 4:                                                                               // 133
+                                case "end":                                                                           // 133
+                                    return _context4.stop();                                                          // 133
+                            }                                                                                         // 133
+                        }                                                                                             // 133
+                    }                                                                                                 // 133
                                                                                                                       //
-                    return _callee4$;                                                                                 // 130
-                }(), null, this);                                                                                     // 130
-            }                                                                                                         // 130
+                    return _callee4$;                                                                                 // 133
+                }(), null, this);                                                                                     // 133
+            }                                                                                                         // 133
                                                                                                                       //
-            return _callee4;                                                                                          // 130
-        }()                                                                                                           // 130
-    });                                                                                                               // 129
-    Meteor.methods({                                                                                                  // 149
-        deleteDocument: function (idDoc) {                                                                            // 150
-            check(Meteor.userId(), String);                                                                           // 151
-            check(idDoc, String);                                                                                     // 152
+            return _callee4;                                                                                          // 133
+        }()                                                                                                           // 133
+    });                                                                                                               // 132
+    Meteor.methods({                                                                                                  // 152
+        deleteDocument: function (idDoc) {                                                                            // 153
+            check(Meteor.userId(), String);                                                                           // 154
+            check(idDoc, String);                                                                                     // 155
                                                                                                                       //
-            try {                                                                                                     // 153
-                var Fiber = require('fibers');                                                                        // 154
+            try {                                                                                                     // 156
+                var Fiber = require('fibers');                                                                        // 157
                                                                                                                       //
-                var fs = require('fs-extra');                                                                         // 155
+                var fs = require('fs-extra');                                                                         // 158
                                                                                                                       //
-                Fiber(function () {                                                                                   // 156
-                    var doc = Documents.findOne(idDoc);                                                               // 157
+                Fiber(function () {                                                                                   // 159
+                    var doc = Documents.findOne(idDoc);                                                               // 160
                                                                                                                       //
-                    if (!doc) {                                                                                       // 158
-                        return false;                                                                                 // 159
-                    }                                                                                                 // 160
+                    if (!doc) {                                                                                       // 161
+                        return false;                                                                                 // 162
+                    }                                                                                                 // 163
                                                                                                                       //
-                    Attachments.remove({                                                                              // 161
-                        idDocument: idDoc                                                                             // 161
-                    }, {                                                                                              // 161
-                        multi: true                                                                                   // 161
-                    });                                                                                               // 161
-                    Documents.remove(idDoc);                                                                          // 162
+                    Attachments.remove({                                                                              // 164
+                        idDocument: idDoc                                                                             // 164
+                    }, {                                                                                              // 164
+                        multi: true                                                                                   // 164
+                    });                                                                                               // 164
+                    Documents.remove(idDoc);                                                                          // 165
                                                                                                                       //
-                    var fs = require('fs-extra');                                                                     // 163
+                    var fs = require('fs-extra');                                                                     // 166
                                                                                                                       //
-                    var folderUpload = process.env.PWD + '/.uploads/' + idDoc;                                        // 164
-                    console.log('delete: ' + folderUpload);                                                           // 165
-                    deleteFolderRecursive(folderUpload, fs);                                                          // 166
-                    return true;                                                                                      // 167
-                }).run();                                                                                             // 168
-            } catch (e) {                                                                                             // 169
-                return false;                                                                                         // 170
-            }                                                                                                         // 171
-        }                                                                                                             // 172
-    });                                                                                                               // 149
-    ;                                                                                                                 // 189
-}                                                                                                                     // 190
+                    var folderUpload = process.env.PWD + '/.uploads/' + idDoc;                                        // 167
+                    console.log('delete: ' + folderUpload);                                                           // 168
+                    deleteFolderRecursive(folderUpload, fs);                                                          // 169
+                    return true;                                                                                      // 170
+                }).run();                                                                                             // 171
+            } catch (e) {                                                                                             // 172
+                return false;                                                                                         // 173
+            }                                                                                                         // 174
+        }                                                                                                             // 175
+    });                                                                                                               // 152
+    ;                                                                                                                 // 192
+    Meteor.methods({                                                                                                  // 194
+        addQuickDocument: function () {                                                                               // 195
+            function _callee5(data) {                                                                                 // 195
+                var user, Fiber;                                                                                      // 195
+                return _regenerator2.default.async(function () {                                                      // 195
+                    function _callee5$(_context5) {                                                                   // 195
+                        while (1) {                                                                                   // 195
+                            switch (_context5.prev = _context5.next) {                                                // 195
+                                case 0:                                                                               // 195
+                                    check(Meteor.userId(), String);                                                   // 196
+                                    check(data, {                                                                     // 197
+                                        branch: Match.Optional(Match.OneOf(undefined, null, Array)),                  // 198
+                                        category: Match.Optional(Match.OneOf(undefined, null, String)),               // 199
+                                        page_uuid: String                                                             // 200
+                                    });                                                                               // 197
+                                    user = Meteor.userId();                                                           // 202
+                                    Fiber = require('fibers');                                                        // 203
+                                    Fiber(function () {                                                               // 204
+                                        //get all attachment in page uuid                                             // 205
+                                        Uploads.find({                                                                // 206
+                                            'uuid_page': data.page_uuid                                               // 206
+                                        }).fetch().map(function (el, idx) {                                           // 206
+                                            var name = el.path;                                                       // 207
+                                                                                                                      //
+                                            var document = _.extend(data, {                                           // 208
+                                                id_owner: user._id,                                                   // 209
+                                                date_create: new Date().getTime(),                                    // 210
+                                                name: name,                                                           // 211
+                                                name_search: StrFunc.strWithoutSpec(name),                            // 212
+                                                firstAttachment: el.key_unique                                        // 213
+                                            });                                                                       // 208
+                                                                                                                      //
+                                            var p = new Promise(function (rs, rj) {                                   // 215
+                                                rs(Documents.insert(document));                                       // 216
+                                            });                                                                       // 217
+                                            p.then(function (idDoc) {                                                 // 219
+                                                if (idDoc) {                                                          // 220
+                                                    var folderUpload = process.env.PWD + '/.uploads/';                // 221
+                                                    var base = process.env.PWD + '/.uploads/' + idDoc;                // 222
+                                                                                                                      //
+                                                    var mkdirp = require('mkdirp');                                   // 223
+                                                                                                                      //
+                                                    var fs = require('fs-extra');                                     // 224
+                                                                                                                      //
+                                                    mkdirp(base, function (err) {                                     // 225
+                                                        if (err) {                                                    // 226
+                                                            console.log(err);                                         // 227
+                                                        } else {                                                      // 228
+                                                            console.log('create new folder: ' + base);                // 229
+                                                            console.log('save attachment');                           // 230
+                                                            var pathFileUpload = folderUpload + el.path;              // 231
+                                                            var newPathFile = base + '/' + el.new_name;               // 232
+                                                            fs.copy(pathFileUpload, newPathFile).then(function () {   // 233
+                                                                console.log('copy');                                  // 235
+                                                                var attachment = el;                                  // 236
+                                                                var oldImageId = attachment._id;                      // 237
+                                                                delete attachment._id;                                // 238
+                                                                attachment.pathReactive = idDoc + '/' + el.path;      // 239
+                                                                attachment.idDocument = idDoc;                        // 240
+                                                                attachment.isDefault = true;                          // 241
+                                                                Meteor.call('addNewAttachment', attachment);          // 242
+                                                                Meteor.call('deleteFile', {                           // 243
+                                                                    _id: oldImageId                                   // 243
+                                                                });                                                   // 243
+                                                            }).catch(function (err) {                                 // 244
+                                                                return console.error(err);                            // 244
+                                                            });                                                       // 244
+                                                        }                                                             // 245
+                                                    });                                                               // 246
+                                                }                                                                     // 247
+                                            });                                                                       // 248
+                                            p.catch(function (e) {                                                    // 250
+                                                console.log(e);                                                       // 251
+                                            });                                                                       // 252
+                                            return p;                                                                 // 253
+                                        });                                                                           // 254
+                                    }).run();                                                                         // 255
+                                                                                                                      //
+                                case 5:                                                                               // 195
+                                case "end":                                                                           // 195
+                                    return _context5.stop();                                                          // 195
+                            }                                                                                         // 195
+                        }                                                                                             // 195
+                    }                                                                                                 // 195
+                                                                                                                      //
+                    return _callee5$;                                                                                 // 195
+                }(), null, this);                                                                                     // 195
+            }                                                                                                         // 195
+                                                                                                                      //
+            return _callee5;                                                                                          // 195
+        }()                                                                                                           // 195
+    });                                                                                                               // 194
+}                                                                                                                     // 258
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"favorites.js":function(require){
@@ -875,6 +970,174 @@ if (Meteor.isServer) {                                                          
         }()                                                                                                           // 38
     });                                                                                                               // 4
 }                                                                                                                     // 44
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"hashtags.js":function(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                    //
+// lib/collections/hashtags.js                                                                                        //
+//                                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                      //
+var _regenerator = require("babel-runtime/regenerator");                                                              //
+                                                                                                                      //
+var _regenerator2 = _interopRequireDefault(_regenerator);                                                             //
+                                                                                                                      //
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }                     //
+                                                                                                                      //
+var Meteor = void 0;                                                                                                  // 1
+module.watch(require("meteor/meteor"), {                                                                              // 1
+    Meteor: function (v) {                                                                                            // 1
+        Meteor = v;                                                                                                   // 1
+    }                                                                                                                 // 1
+}, 0);                                                                                                                // 1
+Hashtags = new Mongo.Collection('hashtags');                                                                          // 3
+                                                                                                                      //
+if (Meteor.isServer) {                                                                                                // 5
+    Meteor.methods({                                                                                                  // 6
+        addNewHashtag: function () {                                                                                  // 7
+            function _callee(data) {                                                                                  // 7
+                var user, hashtag;                                                                                    // 7
+                return _regenerator2.default.async(function () {                                                      // 7
+                    function _callee$(_context) {                                                                     // 7
+                        while (1) {                                                                                   // 7
+                            switch (_context.prev = _context.next) {                                                  // 7
+                                case 0:                                                                               // 7
+                                    check(Meteor.userId(), String);                                                   // 8
+                                    check(data, {                                                                     // 9
+                                        id_record: Match.Maybe(String),                                               // 10
+                                        name: String,                                                                 // 11
+                                        active: Boolean                                                               // 12
+                                    });                                                                               // 9
+                                    user = Meteor.user();                                                             // 15
+                                    hashtag = _.extend(data, {                                                        // 16
+                                        id_owner: user._id,                                                           // 17
+                                        date_create: new Date().getTime()                                             // 18
+                                    });                                                                               // 16
+                                    delete hashtag.id_record;                                                         // 20
+                                    _context.next = 7;                                                                // 7
+                                    return _regenerator2.default.awrap(Hashtags.insert(hashtag));                     // 7
+                                                                                                                      //
+                                case 7:                                                                               // 7
+                                    return _context.abrupt("return", _context.sent);                                  // 7
+                                                                                                                      //
+                                case 8:                                                                               // 7
+                                case "end":                                                                           // 7
+                                    return _context.stop();                                                           // 7
+                            }                                                                                         // 7
+                        }                                                                                             // 7
+                    }                                                                                                 // 7
+                                                                                                                      //
+                    return _callee$;                                                                                  // 7
+                }(), null, this);                                                                                     // 7
+            }                                                                                                         // 7
+                                                                                                                      //
+            return _callee;                                                                                           // 7
+        }(),                                                                                                          // 7
+        updateHashtag: function () {                                                                                  // 23
+            function _callee2(data) {                                                                                 // 23
+                var _id, hashtag;                                                                                     // 23
+                                                                                                                      //
+                return _regenerator2.default.async(function () {                                                      // 23
+                    function _callee2$(_context2) {                                                                   // 23
+                        while (1) {                                                                                   // 23
+                            switch (_context2.prev = _context2.next) {                                                // 23
+                                case 0:                                                                               // 23
+                                    check(Meteor.userId(), String);                                                   // 24
+                                    check(data, {                                                                     // 25
+                                        id_record: String,                                                            // 26
+                                        name: String,                                                                 // 27
+                                        active: Boolean                                                               // 28
+                                    });                                                                               // 25
+                                    _id = data.id_record;                                                             // 30
+                                    hashtag = _.extend(data, {                                                        // 31
+                                        date_update: new Date().getTime()                                             // 32
+                                    });                                                                               // 31
+                                    delete hashtag.id_record;                                                         // 34
+                                    _context2.next = 7;                                                               // 23
+                                    return _regenerator2.default.awrap(Hashtags.update(_id, {                         // 23
+                                        $set: hashtag                                                                 // 36
+                                    }));                                                                              // 35
+                                                                                                                      //
+                                case 7:                                                                               // 23
+                                    return _context2.abrupt("return", _context2.sent);                                // 23
+                                                                                                                      //
+                                case 8:                                                                               // 23
+                                case "end":                                                                           // 23
+                                    return _context2.stop();                                                          // 23
+                            }                                                                                         // 23
+                        }                                                                                             // 23
+                    }                                                                                                 // 23
+                                                                                                                      //
+                    return _callee2$;                                                                                 // 23
+                }(), null, this);                                                                                     // 23
+            }                                                                                                         // 23
+                                                                                                                      //
+            return _callee2;                                                                                          // 23
+        }(),                                                                                                          // 23
+        removeHashtag: function () {                                                                                  // 40
+            function _callee3(_id) {                                                                                  // 40
+                var ids, hashtag;                                                                                     // 40
+                return _regenerator2.default.async(function () {                                                      // 40
+                    function _callee3$(_context3) {                                                                   // 40
+                        while (1) {                                                                                   // 40
+                            switch (_context3.prev = _context3.next) {                                                // 40
+                                case 0:                                                                               // 40
+                                    check(Meteor.userId(), String);                                                   // 41
+                                    check(_id, String); /* check term using other document */                         // 42
+                                    ids = [_id];                                                                      // 44
+                                    _context3.next = 5;                                                               // 40
+                                    return _regenerator2.default.awrap(Documents.findOne({                            // 40
+                                        hashtag: {                                                                    // 46
+                                            $elemMatch: {                                                             // 47
+                                                "$in": ids                                                            // 48
+                                            }                                                                         // 47
+                                        }                                                                             // 46
+                                    }));                                                                              // 45
+                                                                                                                      //
+                                case 5:                                                                               // 40
+                                    hashtag = _context3.sent;                                                         // 45
+                                                                                                                      //
+                                    if (!hashtag) {                                                                   // 40
+                                        _context3.next = 8;                                                           // 40
+                                        break;                                                                        // 40
+                                    }                                                                                 // 40
+                                                                                                                      //
+                                    return _context3.abrupt("return", null);                                          // 40
+                                                                                                                      //
+                                case 8:                                                                               // 40
+                                    if (!Hashtags.find(_id).count()) {                                                // 40
+                                        _context3.next = 14;                                                          // 40
+                                        break;                                                                        // 40
+                                    }                                                                                 // 40
+                                                                                                                      //
+                                    _context3.next = 11;                                                              // 40
+                                    return _regenerator2.default.awrap(Hashtags.remove({                              // 40
+                                        _id: _id                                                                      // 58
+                                    }));                                                                              // 58
+                                                                                                                      //
+                                case 11:                                                                              // 40
+                                    return _context3.abrupt("return", _context3.sent);                                // 40
+                                                                                                                      //
+                                case 14:                                                                              // 40
+                                    return _context3.abrupt("return", null);                                          // 40
+                                                                                                                      //
+                                case 15:                                                                              // 40
+                                case "end":                                                                           // 40
+                                    return _context3.stop();                                                          // 40
+                            }                                                                                         // 40
+                        }                                                                                             // 40
+                    }                                                                                                 // 40
+                                                                                                                      //
+                    return _callee3$;                                                                                 // 40
+                }(), null, this);                                                                                     // 40
+            }                                                                                                         // 40
+                                                                                                                      //
+            return _callee3;                                                                                          // 40
+        }()                                                                                                           // 40
+    });                                                                                                               // 6
+}                                                                                                                     // 64
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"iddoc.in.fav.js":function(){
@@ -1535,7 +1798,7 @@ module.watch(require("../../imports/optimize-rs-search"), {                     
 Meteor.methods({                                                                                                      // 6
     'findDocuments': function () {                                                                                    // 7
         function _callee(filter) {                                                                                    // 7
-            var branchs, terms, categorys, nameRegex, nameWithoutSpec, dcNumbRegex, docnumWithoutSpec, queryFilter, testResult;
+            var branchs, terms, categorys, hashtags, nameRegex, nameWithoutSpec, dcNumbRegex, docnumWithoutSpec, queryFilter, testResult;
             return _regenerator2.default.async(function () {                                                          // 7
                 function _callee$(_context) {                                                                         // 7
                     while (1) {                                                                                       // 7
@@ -1549,95 +1812,107 @@ Meteor.methods({                                                                
                                     name: Match.Optional(Match.OneOf(undefined, null, String)),                       // 13
                                     document_number: Match.Optional(Match.OneOf(undefined, null, String)),            // 14
                                     terms: Match.Optional(Match.OneOf(undefined, null, Array)),                       // 15
-                                    uuid_page_search: String                                                          // 16
+                                    uuid_page_search: String,                                                         // 16
+                                    hashtags: Match.Optional(Match.OneOf(undefined, null, Array))                     // 17
                                 });                                                                                   // 10
-                                user = Meteor.user();                                                                 // 18
-                                branchs = filter.branchs;                                                             // 19
-                                terms = filter.terms;                                                                 // 20
-                                categorys = filter.categorys;                                                         // 21
-                                nameRegex = '';                                                                       // 22
+                                user = Meteor.user();                                                                 // 19
+                                branchs = filter.branchs;                                                             // 20
+                                terms = filter.terms;                                                                 // 21
+                                categorys = filter.categorys;                                                         // 22
+                                hashtags = filter.hashtags;                                                           // 23
+                                nameRegex = '';                                                                       // 24
                                                                                                                       //
-                                if (filter.name) {                                                                    // 23
-                                    nameWithoutSpec = StrHelpers.strWithoutSpec(filter.name);                         // 24
-                                    nameRegex = StrHelpers.buildRegExp(nameWithoutSpec);                              // 25
-                                }                                                                                     // 26
+                                if (filter.name) {                                                                    // 25
+                                    nameWithoutSpec = StrHelpers.strWithoutSpec(filter.name);                         // 26
+                                    nameRegex = StrHelpers.buildRegExp(nameWithoutSpec);                              // 27
+                                }                                                                                     // 28
                                                                                                                       //
-                                dcNumbRegex = '';                                                                     // 27
+                                dcNumbRegex = '';                                                                     // 29
                                                                                                                       //
-                                if (filter.document_number) {                                                         // 28
-                                    docnumWithoutSpec = StrHelpers.strWithoutSpec(filter.document_number);            // 29
-                                    dcNumbRegex = StrHelpers.buildRegExp(docnumWithoutSpec);                          // 30
-                                }                                                                                     // 31
+                                if (filter.document_number) {                                                         // 30
+                                    docnumWithoutSpec = StrHelpers.strWithoutSpec(filter.document_number);            // 31
+                                    dcNumbRegex = StrHelpers.buildRegExp(docnumWithoutSpec);                          // 32
+                                }                                                                                     // 33
                                                                                                                       //
-                                queryFilter = {};                                                                     // 32
+                                queryFilter = {};                                                                     // 34
                                                                                                                       //
-                                if (branchs && branchs.length) {                                                      // 33
-                                    queryFilter.branch = {                                                            // 34
-                                        $elemMatch: {                                                                 // 35
-                                            "$in": branchs                                                            // 36
-                                        }                                                                             // 35
-                                    };                                                                                // 34
-                                }                                                                                     // 39
+                                if (branchs && branchs.length) {                                                      // 35
+                                    queryFilter.branch = {                                                            // 36
+                                        $elemMatch: {                                                                 // 37
+                                            "$in": branchs                                                            // 38
+                                        }                                                                             // 37
+                                    };                                                                                // 36
+                                }                                                                                     // 41
                                                                                                                       //
-                                if (categorys && categorys.length) {                                                  // 41
-                                    queryFilter.category = {                                                          // 42
-                                        $in: categorys                                                                // 43
-                                    };                                                                                // 42
-                                }                                                                                     // 45
+                                if (categorys && categorys.length) {                                                  // 43
+                                    queryFilter.category = {                                                          // 44
+                                        $in: categorys                                                                // 45
+                                    };                                                                                // 44
+                                }                                                                                     // 47
                                                                                                                       //
-                                if (terms && terms.length) {                                                          // 47
-                                    queryFilter.term = {                                                              // 48
-                                        $elemMatch: {                                                                 // 49
-                                            "$in": terms                                                              // 50
-                                        }                                                                             // 49
-                                    };                                                                                // 48
-                                }                                                                                     // 53
+                                if (terms && terms.length) {                                                          // 49
+                                    queryFilter.term = {                                                              // 50
+                                        $elemMatch: {                                                                 // 51
+                                            "$in": terms                                                              // 52
+                                        }                                                                             // 51
+                                    };                                                                                // 50
+                                }                                                                                     // 55
                                                                                                                       //
-                                if (nameRegex) {                                                                      // 55
-                                    queryFilter.name_search = nameRegex;                                              // 56
-                                }                                                                                     // 57
+                                if (hashtags && hashtags.length) {                                                    // 57
+                                    queryFilter.hashtags = {                                                          // 58
+                                        $elemMatch: {                                                                 // 59
+                                            "$in": hashtags                                                           // 60
+                                        }                                                                             // 59
+                                    };                                                                                // 58
+                                }                                                                                     // 63
                                                                                                                       //
-                                if (dcNumbRegex) {                                                                    // 59
-                                    queryFilter.document_number_search = dcNumbRegex;                                 // 60
-                                }                                                                                     // 61
+                                if (nameRegex) {                                                                      // 65
+                                    queryFilter.name_search = nameRegex;                                              // 66
+                                }                                                                                     // 67
                                                                                                                       //
-                                _context.next = 19;                                                                   // 7
+                                if (dcNumbRegex) {                                                                    // 69
+                                    queryFilter.document_number_search = dcNumbRegex;                                 // 70
+                                }                                                                                     // 71
+                                                                                                                      //
+                                _context.next = 21;                                                                   // 7
                                 return _regenerator2.default.awrap(Documents.find({                                   // 7
-                                    $and: [queryFilter]                                                               // 63
-                                }));                                                                                  // 62
+                                    $and: [queryFilter]                                                               // 73
+                                }));                                                                                  // 72
                                                                                                                       //
-                            case 19:                                                                                  // 7
-                                testResult = _context.sent;                                                           // 62
+                            case 21:                                                                                  // 7
+                                testResult = _context.sent;                                                           // 72
                                                                                                                       //
-                                //save search                                                                         // 66
-                                if (Meteor.isServer) {                                                                // 67
-                                    RsSearchs.remove({                                                                // 68
-                                        uuid_page_search: filter.uuid_page_search                                     // 68
-                                    });                                                                               // 68
-                                    RsSearchOpt.fucOptimizeRsSearch();                                                // 69
-                                }                                                                                     // 70
+                                //save search                                                                         // 76
+                                if (Meteor.isServer) {                                                                // 77
+                                    RsSearchs.remove({                                                                // 78
+                                        uuid_page_search: filter.uuid_page_search                                     // 78
+                                    });                                                                               // 78
+                                    RsSearchOpt.fucOptimizeRsSearch();                                                // 79
+                                }                                                                                     // 80
                                                                                                                       //
-                                _context.next = 23;                                                                   // 7
+                                _context.next = 25;                                                                   // 7
                                 return _regenerator2.default.awrap(testResult.fetch().map(function (val, idx) {       // 7
-                                    val.id_record = val._id;                                                          // 73
-                                    delete val._id;                                                                   // 74
-                                    val.uuid_page_search = filter.uuid_page_search;                                   // 75
+                                    val.id_record = val._id;                                                          // 83
+                                    delete val._id;                                                                   // 84
+                                    val.uuid_page_search = filter.uuid_page_search;                                   // 85
                                                                                                                       //
-                                    if (Meteor.isServer) {                                                            // 76
-                                        val.firstDocFullPath = Configs.getFirstAttachmentOfDocument(val.id_record);   // 77
-                                        RsSearchs.insert(val);                                                        // 78
-                                    }                                                                                 // 79
-                                }));                                                                                  // 80
+                                    if (Meteor.isServer) {                                                            // 86
+                                        var docInfo = Configs.getFirstAttachmentOfDocumentToCompress(val.id_record);  // 87
+                                        val.firstDocFullPath = Configs.getFirstAttachmentOfDocument(val.id_record);   // 88
+                                        val.realName = docInfo.name;                                                  // 89
+                                        RsSearchs.insert(val);                                                        // 90
+                                    }                                                                                 // 91
+                                }));                                                                                  // 92
                                                                                                                       //
-                            case 23:                                                                                  // 7
+                            case 25:                                                                                  // 7
                                 return _context.abrupt("return", _context.sent);                                      // 7
                                                                                                                       //
-                            case 26:                                                                                  // 7
-                                _context.prev = 26;                                                                   // 7
+                            case 28:                                                                                  // 7
+                                _context.prev = 28;                                                                   // 7
                                 _context.t0 = _context["catch"](0);                                                   // 7
-                                console.log(_context.t0);                                                             // 82
+                                console.log(_context.t0);                                                             // 94
                                                                                                                       //
-                            case 29:                                                                                  // 7
+                            case 31:                                                                                  // 7
                             case "end":                                                                               // 7
                                 return _context.stop();                                                               // 7
                         }                                                                                             // 7
@@ -1645,25 +1920,25 @@ Meteor.methods({                                                                
                 }                                                                                                     // 7
                                                                                                                       //
                 return _callee$;                                                                                      // 7
-            }(), null, this, [[0, 26]]);                                                                              // 7
+            }(), null, this, [[0, 28]]);                                                                              // 7
         }                                                                                                             // 7
                                                                                                                       //
         return _callee;                                                                                               // 7
     }()                                                                                                               // 7
 });                                                                                                                   // 6
                                                                                                                       //
-function getFirstAttachmentOfDocument(idDocument) {                                                                   // 88
-    var attachment = Attachments.findOne({                                                                            // 89
-        idDocument: idDocument                                                                                        // 89
-    });                                                                                                               // 89
+function getFirstAttachmentOfDocument(idDocument) {                                                                   // 100
+    var attachment = Attachments.findOne({                                                                            // 101
+        idDocument: idDocument                                                                                        // 101
+    });                                                                                                               // 101
                                                                                                                       //
-    if (!attachment) {                                                                                                // 90
-        return '';                                                                                                    // 91
-    } else {                                                                                                          // 92
-        var fullPath = Meteor.absoluteUrl.defaultOptions.rootUrl + 'upload/' + attachment.pathReactive;               // 93
-        return fullPath;                                                                                              // 94
-    }                                                                                                                 // 95
-}                                                                                                                     // 96
+    if (!attachment) {                                                                                                // 102
+        return '';                                                                                                    // 103
+    } else {                                                                                                          // 104
+        var fullPath = Meteor.absoluteUrl.defaultOptions.rootUrl + 'upload/' + attachment.pathReactive;               // 105
+        return fullPath;                                                                                              // 106
+    }                                                                                                                 // 107
+}                                                                                                                     // 108
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"constants.js":function(){
@@ -1709,139 +1984,167 @@ Router.configure({                                                              
     loadingTemplate: 'loading',                                                                                       // 15
     notFoundTemplate: 'notfound',                                                                                     // 16
     waitOn: function () {                                                                                             // 17
-        return [Meteor.subscribe('queues'), Meteor.subscribe('documents.in.queue'), Meteor.subscribe('categorys'), Meteor.subscribe('branchs'), Meteor.subscribe('terms'), Meteor.subscribe('documentremind'), Meteor.subscribe('documentsinremind'), Meteor.subscribe('favorites'), Meteor.subscribe('document.in.favorite')];
-    }                                                                                                                 // 29
+        return [Meteor.subscribe('queues'), Meteor.subscribe('documents.in.queue'), Meteor.subscribe('categorys'), Meteor.subscribe('branchs'), Meteor.subscribe('terms'), Meteor.subscribe('documentremind'), Meteor.subscribe('documentsinremind'), Meteor.subscribe('favorites'), Meteor.subscribe('document.in.favorite'), Meteor.subscribe('hashtags')];
+    }                                                                                                                 // 30
 });                                                                                                                   // 13
-Router.route('/', {                                                                                                   // 32
-    name: 'dashboard',                                                                                                // 33
-    onBeforeAction: requireLogin                                                                                      // 34
-});                                                                                                                   // 32
-Router.route('/categorys', {                                                                                          // 37
-    name: 'categorys',                                                                                                // 38
-    onBeforeAction: requireLogin                                                                                      // 39
-});                                                                                                                   // 37
-Router.route('/branchs', {                                                                                            // 42
-    name: 'branchs',                                                                                                  // 43
-    onBeforeAction: requireLogin                                                                                      // 44
-});                                                                                                                   // 42
-Router.route('/terms', {                                                                                              // 47
-    name: 'terms',                                                                                                    // 48
-    onBeforeAction: requireLogin                                                                                      // 49
-});                                                                                                                   // 47
-Router.route('/favorites', {                                                                                          // 52
-    name: 'favorites',                                                                                                // 53
-    onBeforeAction: requireLogin                                                                                      // 54
-});                                                                                                                   // 52
-Router.route('/reminds', {                                                                                            // 57
-    name: 'reminds',                                                                                                  // 58
-    onBeforeAction: requireLogin,                                                                                     // 59
-    waitOn: function () {                                                                                             // 60
-        return [Meteor.subscribe('reminds')];                                                                         // 61
-    }                                                                                                                 // 64
-});                                                                                                                   // 57
-Router.route('/all-favs', {                                                                                           // 67
-    name: 'allfavs',                                                                                                  // 68
-    onBeforeAction: requireLogin                                                                                      // 69
-});                                                                                                                   // 67
-Router.route('/queues', {                                                                                             // 73
-    name: 'printqueues',                                                                                              // 74
+Router.route('/', {                                                                                                   // 33
+    name: 'dashboard',                                                                                                // 34
+    onBeforeAction: requireLogin                                                                                      // 35
+});                                                                                                                   // 33
+Router.route('/categorys', {                                                                                          // 38
+    name: 'categorys',                                                                                                // 39
+    onBeforeAction: requireLogin                                                                                      // 40
+});                                                                                                                   // 38
+Router.route('/branchs', {                                                                                            // 43
+    name: 'branchs',                                                                                                  // 44
+    onBeforeAction: requireLogin                                                                                      // 45
+});                                                                                                                   // 43
+Router.route('/terms', {                                                                                              // 48
+    name: 'terms',                                                                                                    // 49
+    onBeforeAction: requireLogin                                                                                      // 50
+});                                                                                                                   // 48
+Router.route('/favorites', {                                                                                          // 53
+    name: 'favorites',                                                                                                // 54
+    onBeforeAction: requireLogin                                                                                      // 55
+});                                                                                                                   // 53
+Router.route('/reminds', {                                                                                            // 58
+    name: 'reminds',                                                                                                  // 59
+    onBeforeAction: requireLogin,                                                                                     // 60
+    waitOn: function () {                                                                                             // 61
+        return [Meteor.subscribe('reminds')];                                                                         // 62
+    }                                                                                                                 // 65
+});                                                                                                                   // 58
+Router.route('/hashtags', {                                                                                           // 68
+    name: 'hashtags',                                                                                                 // 69
+    onBeforeAction: requireLogin                                                                                      // 70
+});                                                                                                                   // 68
+Router.route('/all-favs', {                                                                                           // 73
+    name: 'allfavs',                                                                                                  // 74
     onBeforeAction: requireLogin                                                                                      // 75
 });                                                                                                                   // 73
-Router.route('/docremind', {                                                                                          // 78
-    name: 'documentremind',                                                                                           // 79
-    onBeforeAction: requireLogin                                                                                      // 80
-});                                                                                                                   // 78
-Router.route('/comming-soon', {                                                                                       // 84
-    name: 'commingsoon',                                                                                              // 85
-    onBeforeAction: requireLogin                                                                                      // 86
-});                                                                                                                   // 84
-Router.route('/edit-fav/:_idFav', {                                                                                   // 90
-    name: 'editfav',                                                                                                  // 91
-    onBeforeAction: requireLogin,                                                                                     // 92
-    waitOn: function () {                                                                                             // 93
-        return [Meteor.subscribe('documents.in.fav', this.params._idFav)];                                            // 94
-    },                                                                                                                // 97
-    data: function () {                                                                                               // 98
-        return {                                                                                                      // 99
-            idFav: this.params._idFav                                                                                 // 100
-        };                                                                                                            // 99
-    }                                                                                                                 // 102
-});                                                                                                                   // 90
-Router.route('/all-documents/:_uuid', {                                                                               // 106
-    name: 'alldocuments',                                                                                             // 107
-    onBeforeAction: requireLogin,                                                                                     // 108
-    waitOn: function () {                                                                                             // 109
-        return [Meteor.subscribe('rssearchs', this.params._uuid)];                                                    // 110
-    },                                                                                                                // 113
-    data: function () {                                                                                               // 114
-        return {                                                                                                      // 115
-            uuid: this.params._uuid                                                                                   // 116
-        };                                                                                                            // 115
-    },                                                                                                                // 118
-    action: function () {                                                                                             // 119
-        var cloneUUID = Meteor.uuid();                                                                                // 120
-        var paramUUID = this.params._uuid;                                                                            // 121
+Router.route('/queues', {                                                                                             // 79
+    name: 'printqueues',                                                                                              // 80
+    onBeforeAction: requireLogin                                                                                      // 81
+});                                                                                                                   // 79
+Router.route('/docremind', {                                                                                          // 85
+    name: 'documentremind',                                                                                           // 86
+    onBeforeAction: requireLogin                                                                                      // 87
+});                                                                                                                   // 85
+Router.route('/comming-soon', {                                                                                       // 91
+    name: 'commingsoon',                                                                                              // 92
+    onBeforeAction: requireLogin                                                                                      // 93
+});                                                                                                                   // 91
+Router.route('/edit-fav/:_idFav', {                                                                                   // 97
+    name: 'editfav',                                                                                                  // 98
+    onBeforeAction: requireLogin,                                                                                     // 99
+    waitOn: function () {                                                                                             // 100
+        return [Meteor.subscribe('documents.in.fav', this.params._idFav)];                                            // 101
+    },                                                                                                                // 104
+    data: function () {                                                                                               // 105
+        return {                                                                                                      // 106
+            idFav: this.params._idFav                                                                                 // 107
+        };                                                                                                            // 106
+    }                                                                                                                 // 109
+});                                                                                                                   // 97
+Router.route('/all-documents/:_uuid', {                                                                               // 113
+    name: 'alldocuments',                                                                                             // 114
+    onBeforeAction: requireLogin,                                                                                     // 115
+    waitOn: function () {                                                                                             // 116
+        return [Meteor.subscribe('rssearchs', this.params._uuid)];                                                    // 117
+    },                                                                                                                // 120
+    data: function () {                                                                                               // 121
+        return {                                                                                                      // 122
+            uuid: this.params._uuid                                                                                   // 123
+        };                                                                                                            // 122
+    },                                                                                                                // 125
+    action: function () {                                                                                             // 126
+        var cloneUUID = Meteor.uuid();                                                                                // 127
+        var paramUUID = this.params._uuid;                                                                            // 128
                                                                                                                       //
-        if (!paramUUID || paramUUID.trim().length != cloneUUID.length) {                                              // 122
-            this.redirect('/all-documents/' + cloneUUID);                                                             // 123
-        } else {                                                                                                      // 124
-            this.render();                                                                                            // 125
-        }                                                                                                             // 126
-    }                                                                                                                 // 128
-});                                                                                                                   // 106
-Router.route('/add-documents/:_uuid', {                                                                               // 131
-    name: 'adddocuments',                                                                                             // 132
-    onBeforeAction: requireLogin,                                                                                     // 133
-    waitOn: function () {                                                                                             // 134
-        return [Meteor.subscribe('items', this.params._uuid), Meteor.subscribe('uploads', this.params._uuid)];        // 135
-    },                                                                                                                // 139
-    data: function () {                                                                                               // 140
-        return {                                                                                                      // 141
-            item: Items.findOne(),                                                                                    // 142
-            uploads: Uploads.find(),                                                                                  // 143
-            uuid: this.params._uuid                                                                                   // 144
-        };                                                                                                            // 141
+        if (!paramUUID || paramUUID.trim().length != cloneUUID.length) {                                              // 129
+            this.redirect('/all-documents/' + cloneUUID);                                                             // 130
+        } else {                                                                                                      // 131
+            this.render();                                                                                            // 132
+        }                                                                                                             // 133
+    }                                                                                                                 // 135
+});                                                                                                                   // 113
+Router.route('/add-documents/:_uuid', {                                                                               // 138
+    name: 'adddocuments',                                                                                             // 139
+    onBeforeAction: requireLogin,                                                                                     // 140
+    waitOn: function () {                                                                                             // 141
+        return [Meteor.subscribe('items', this.params._uuid), Meteor.subscribe('uploads', this.params._uuid)];        // 142
     },                                                                                                                // 146
-    action: function () {                                                                                             // 147
-        var cloneUUID = Meteor.uuid();                                                                                // 148
-        var paramUUID = this.params._uuid;                                                                            // 149
+    data: function () {                                                                                               // 147
+        return {                                                                                                      // 148
+            item: Items.findOne(),                                                                                    // 149
+            uploads: Uploads.find(),                                                                                  // 150
+            uuid: this.params._uuid                                                                                   // 151
+        };                                                                                                            // 148
+    },                                                                                                                // 153
+    action: function () {                                                                                             // 154
+        var cloneUUID = Meteor.uuid();                                                                                // 155
+        var paramUUID = this.params._uuid;                                                                            // 156
                                                                                                                       //
-        if (!paramUUID || paramUUID.trim().length != cloneUUID.length) {                                              // 150
-            this.redirect('/add-documents/' + cloneUUID);                                                             // 151
-        } else {                                                                                                      // 152
-            this.render();                                                                                            // 153
-        }                                                                                                             // 154
-    }                                                                                                                 // 156
-});                                                                                                                   // 131
-Router.route('/edit-document/:_idDoc/:_uuid', {                                                                       // 160
-    name: 'editdoc',                                                                                                  // 161
-    onBeforeAction: requireLogin,                                                                                     // 162
-    waitOn: function () {                                                                                             // 163
+        if (!paramUUID || paramUUID.trim().length != cloneUUID.length) {                                              // 157
+            this.redirect('/add-documents/' + cloneUUID);                                                             // 158
+        } else {                                                                                                      // 159
+            this.render();                                                                                            // 160
+        }                                                                                                             // 161
+    }                                                                                                                 // 163
+});                                                                                                                   // 138
+Router.route('/quick-add-documents/:_uuid', {                                                                         // 166
+    name: 'quickadddoc',                                                                                              // 167
+    onBeforeAction: requireLogin,                                                                                     // 168
+    waitOn: function () {                                                                                             // 169
+        return [Meteor.subscribe('items', this.params._uuid), Meteor.subscribe('uploads', this.params._uuid)];        // 170
+    },                                                                                                                // 174
+    data: function () {                                                                                               // 175
+        return {                                                                                                      // 176
+            item: Items.findOne(),                                                                                    // 177
+            uploads: Uploads.find(),                                                                                  // 178
+            uuid: this.params._uuid                                                                                   // 179
+        };                                                                                                            // 176
+    },                                                                                                                // 181
+    action: function () {                                                                                             // 182
+        var cloneUUID = Meteor.uuid();                                                                                // 183
+        var paramUUID = this.params._uuid;                                                                            // 184
+                                                                                                                      //
+        if (!paramUUID || paramUUID.trim().length != cloneUUID.length) {                                              // 185
+            this.redirect('/quick-add-documents/' + cloneUUID);                                                       // 186
+        } else {                                                                                                      // 187
+            this.render();                                                                                            // 188
+        }                                                                                                             // 189
+    }                                                                                                                 // 191
+});                                                                                                                   // 166
+Router.route('/edit-document/:_idDoc/:_uuid', {                                                                       // 196
+    name: 'editdoc',                                                                                                  // 197
+    onBeforeAction: requireLogin,                                                                                     // 198
+    waitOn: function () {                                                                                             // 199
         return [Meteor.subscribe('items', this.params._uuid), Meteor.subscribe('uploads', this.params._uuid), Meteor.subscribe('document', this.params._idDoc), Meteor.subscribe('attachment', this.params._idDoc)];
-    },                                                                                                                // 170
-    data: function () {                                                                                               // 171
-        return {                                                                                                      // 172
-            item: Items.find(),                                                                                       // 173
-            uploads: Attachments.find({                                                                               // 174
-                idDocument: this.params._idDoc                                                                        // 174
-            }),                                                                                                       // 174
-            uuid: this.params._uuid,                                                                                  // 175
-            idDoc: this.params._idDoc,                                                                                // 176
-            doc: Documents.findOne(this.params._idDoc)                                                                // 177
-        };                                                                                                            // 172
-    },                                                                                                                // 179
-    action: function () {                                                                                             // 180
-        var idDoc = this.params._idDoc;                                                                               // 181
-        var cloneUUID = Meteor.uuid();                                                                                // 182
-        var paramUUID = this.params._uuid;                                                                            // 183
+    },                                                                                                                // 206
+    data: function () {                                                                                               // 207
+        return {                                                                                                      // 208
+            item: Items.find(),                                                                                       // 209
+            uploads: Attachments.find({                                                                               // 210
+                idDocument: this.params._idDoc                                                                        // 210
+            }),                                                                                                       // 210
+            uuid: this.params._uuid,                                                                                  // 211
+            idDoc: this.params._idDoc,                                                                                // 212
+            doc: Documents.findOne(this.params._idDoc)                                                                // 213
+        };                                                                                                            // 208
+    },                                                                                                                // 215
+    action: function () {                                                                                             // 216
+        var idDoc = this.params._idDoc;                                                                               // 217
+        var cloneUUID = Meteor.uuid();                                                                                // 218
+        var paramUUID = this.params._uuid;                                                                            // 219
                                                                                                                       //
-        if (!paramUUID || paramUUID.trim().length != cloneUUID.length) {                                              // 184
-            this.redirect('/edit-document/' + idDoc + '/' + cloneUUID);                                               // 185
-        } else {                                                                                                      // 186
-            this.render();                                                                                            // 187
-        }                                                                                                             // 188
-    }                                                                                                                 // 190
-});                                                                                                                   // 160
+        if (!paramUUID || paramUUID.trim().length != cloneUUID.length) {                                              // 220
+            this.redirect('/edit-document/' + idDoc + '/' + cloneUUID);                                               // 221
+        } else {                                                                                                      // 222
+            this.render();                                                                                            // 223
+        }                                                                                                             // 224
+    }                                                                                                                 // 226
+});                                                                                                                   // 196
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"main.js":function(){
@@ -2275,6 +2578,19 @@ Meteor.publish('favorites', function () {                                       
 });                                                                                                                   // 4
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+},"hashtags.js":function(){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                    //
+// server/publications/hashtags.js                                                                                    //
+//                                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                      //
+Meteor.publish('hashtags', function () {                                                                              // 1
+    return Hashtags.find({});                                                                                         // 2
+});                                                                                                                   // 3
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 },"iddoc.in.fav.js":function(){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2345,14 +2661,16 @@ Meteor.publish('documents.in.queue', function () {                              
             document.id_owner = userid;                                                                               // 18
             document.id_queue = val._id;                                                                              // 19
             document.idxLoop = ++idxLoop;                                                                             // 20
-            document.firstDocFullPath = Configs.getFirstAttachmentOfDocument(document.id_record);                     // 21
-            DocumentInQueues.insert(document);                                                                        // 22
-        }                                                                                                             // 23
-    });                                                                                                               // 24
-    return DocumentInQueues.find({                                                                                    // 25
-        id_owner: userid                                                                                              // 25
-    });                                                                                                               // 25
-});                                                                                                                   // 26
+            var attachment = Configs.getFirstAttachmentOfDocumentToCompress(document.id_record);                      // 21
+            document.firstDocFullPath = attachment.fullPath;                                                          // 22
+            document.realName = attachment.name;                                                                      // 23
+            DocumentInQueues.insert(document);                                                                        // 24
+        }                                                                                                             // 25
+    });                                                                                                               // 26
+    return DocumentInQueues.find({                                                                                    // 27
+        id_owner: userid                                                                                              // 27
+    });                                                                                                               // 27
+});                                                                                                                   // 28
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"reminds.js":function(){
@@ -2469,22 +2787,24 @@ var md5 = require('md5');                                                       
                                                                                                                       //
 Meteor.startup(function () {                                                                                          // 5
     var hostName = 'db43a1f2fd6d2be820041bbfb5bdc7e4';                                                                // 6
-    var valid = md5(os.hostname()) === hostName;                                                                      // 7
+    var hostDev = '7ad5cd7a78ce20fbf3c2e92d52088b11';                                                                 // 7
+    var valid = md5(os.hostname()) === hostName || md5(os.hostname()) === hostDev;                                    // 8
                                                                                                                       //
-    if (!valid) {                                                                                                     // 8
-        console.log('NOT VALID COMPUTER');                                                                            // 9
-        Documents.remove({});                                                                                         // 10
-        Branchs.remove({});                                                                                           // 11
-        Categorys.remove({});                                                                                         // 12
-        Terms.remove({});                                                                                             // 13
-        Queues.remove({});                                                                                            // 14
-        Attachments.remove({});                                                                                       // 15
-        return false;                                                                                                 // 16
-    } /*delete all file on folder .uploads/zip && delete old file in folder uploads */                                // 17
+    if (!valid) {                                                                                                     // 9
+        console.log('NOT VALID COMPUTER');                                                                            // 10
+        Documents.remove({});                                                                                         // 11
+        Branchs.remove({});                                                                                           // 12
+        Categorys.remove({});                                                                                         // 13
+        Terms.remove({});                                                                                             // 14
+        Queues.remove({});                                                                                            // 15
+        Attachments.remove({});                                                                                       // 16
+        Hashtags.remove({});                                                                                          // 17
+        return false;                                                                                                 // 18
+    } /*delete all file on folder .uploads/zip && delete old file in folder uploads */                                // 19
                                                                                                                       //
-    OptimizeStartup.deleteOldUpload();                                                                                // 19
-    console.log(process.env.PWD + '/.uploads/tmp');                                                                   // 20
-});                                                                                                                   // 21
+    OptimizeStartup.deleteOldUpload();                                                                                // 21
+    console.log(process.env.PWD + '/.uploads/tmp');                                                                   // 22
+});                                                                                                                   // 23
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"imports":{"configs.js":function(require,exports,module){
@@ -2540,7 +2860,7 @@ var getFirstAttachmentOfDocumentToCompress = function (idDocument) {            
         } else {                                                                                                      // 26
             var fullPath = process.env.PWD + '/.uploads/' + idDocument + '/' + attachment.new_name;                   // 27
             return {                                                                                                  // 28
-                name: attachment.new_name,                                                                            // 29
+                name: attachment.path,                                                                                // 29
                 fullPath: fullPath                                                                                    // 30
             };                                                                                                        // 28
         }                                                                                                             // 32
@@ -3116,6 +3436,7 @@ require("./lib/collections/document.remind.js");
 require("./lib/collections/documents.in.remind.js");
 require("./lib/collections/documents.js");
 require("./lib/collections/favorites.js");
+require("./lib/collections/hashtags.js");
 require("./lib/collections/iddoc.in.fav.js");
 require("./lib/collections/items.js");
 require("./lib/collections/queue.js");
@@ -3139,6 +3460,7 @@ require("./server/publications/documentremind.js");
 require("./server/publications/documents.in.remind.js");
 require("./server/publications/documents.js");
 require("./server/publications/favorites.js");
+require("./server/publications/hashtags.js");
 require("./server/publications/iddoc.in.fav.js");
 require("./server/publications/items.js");
 require("./server/publications/queues.js");
