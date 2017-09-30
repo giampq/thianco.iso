@@ -2293,7 +2293,7 @@ Meteor.startup(function () {                                                    
                 }                                                                                                     // 30
                                                                                                                       //
                 var time = moment().format('YYYY_MM_DD_HH_mm_ss.');                                                   // 31
-                var newname = StringHelpers.strWithoutSpec(fileInfo.path).replace(' ', '_');                          // 32
+                var newname = StringHelpers.strWithoutSpec(fileInfo.path).replace(/  /g, ' ').replace(/ /g, '_');     // 32
                 fileInfo.new_name = time + newname;                                                                   // 33
             }                                                                                                         // 34
                                                                                                                       //
