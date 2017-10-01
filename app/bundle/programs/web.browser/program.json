@@ -2,76 +2,76 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "947c322ed401c335d2abb448e0f1ce27a1a37f3c.js",
+      "path": "f2e941433d0d003e13eb7571e801287e93cb40d7.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/947c322ed401c335d2abb448e0f1ce27a1a37f3c.js?meteor_js_resource=true",
-      "size": 1291479,
-      "hash": "947c322ed401c335d2abb448e0f1ce27a1a37f3c"
+      "url": "/f2e941433d0d003e13eb7571e801287e93cb40d7.js?meteor_js_resource=true",
+      "size": 1293048,
+      "hash": "f2e941433d0d003e13eb7571e801287e93cb40d7"
     },
     {
-      "path": "947c322ed401c335d2abb448e0f1ce27a1a37f3c.stats.json",
+      "path": "f2e941433d0d003e13eb7571e801287e93cb40d7.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/947c322ed401c335d2abb448e0f1ce27a1a37f3c.stats.json?meteor_js_resource=true",
-      "size": 32477,
-      "hash": "67617bdee518eef95edd686aeb564bbfcc4004a2"
+      "url": "/f2e941433d0d003e13eb7571e801287e93cb40d7.stats.json?meteor_js_resource=true",
+      "size": 32412,
+      "hash": "8ffc0759750ba8f45e3a31680182b8a16bce9f3e"
     },
     {
-      "path": "16d09e1c58baf1d014d41893a3af23d42b80b34d.css",
+      "path": "0dce6b1426f9bc347e1542cccd7e15cae3b9b6dc.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/16d09e1c58baf1d014d41893a3af23d42b80b34d.css?meteor_css_resource=true",
-      "size": 222583,
-      "hash": "16d09e1c58baf1d014d41893a3af23d42b80b34d"
+      "url": "/0dce6b1426f9bc347e1542cccd7e15cae3b9b6dc.css?meteor_css_resource=true",
+      "size": 222445,
+      "hash": "0dce6b1426f9bc347e1542cccd7e15cae3b9b6dc"
     },
     {
-      "path": "275ed4185cd22e41abb32809d7189be0a572bcdf.css",
+      "path": "f1038c469fe91349400b5fae6aab238fb92f12bd.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/275ed4185cd22e41abb32809d7189be0a572bcdf.css?meteor_css_resource=true",
-      "size": 264579,
-      "hash": "275ed4185cd22e41abb32809d7189be0a572bcdf"
+      "url": "/f1038c469fe91349400b5fae6aab238fb92f12bd.css?meteor_css_resource=true",
+      "size": 264778,
+      "hash": "f1038c469fe91349400b5fae6aab238fb92f12bd"
     },
     {
-      "path": "a0d9ed1b30ae1439e0faaa5955f9e85accd4e936.css",
+      "path": "8601ad4a3a494e746ebbf9ca0e84b51635fd6b6f.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/a0d9ed1b30ae1439e0faaa5955f9e85accd4e936.css?meteor_css_resource=true",
-      "size": 264122,
-      "hash": "a0d9ed1b30ae1439e0faaa5955f9e85accd4e936"
+      "url": "/8601ad4a3a494e746ebbf9ca0e84b51635fd6b6f.css?meteor_css_resource=true",
+      "size": 263775,
+      "hash": "8601ad4a3a494e746ebbf9ca0e84b51635fd6b6f"
     },
     {
-      "path": "4e2ca0b782d5ce088164b684a4c0fa1a525ad08c.css",
+      "path": "f6fe02f5b3527b05dedec5935787a9bd6fc07dc3.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/4e2ca0b782d5ce088164b684a4c0fa1a525ad08c.css?meteor_css_resource=true",
-      "size": 263397,
-      "hash": "4e2ca0b782d5ce088164b684a4c0fa1a525ad08c"
+      "url": "/f6fe02f5b3527b05dedec5935787a9bd6fc07dc3.css?meteor_css_resource=true",
+      "size": 263426,
+      "hash": "f6fe02f5b3527b05dedec5935787a9bd6fc07dc3"
     },
     {
-      "path": "24517f0c134e5bbf272af34bd67d1cf686eef388.css",
+      "path": "92a5c168525f1d4e9621e49a0cff5cbdc99f97d8.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/24517f0c134e5bbf272af34bd67d1cf686eef388.css?meteor_css_resource=true",
-      "size": 262465,
-      "hash": "24517f0c134e5bbf272af34bd67d1cf686eef388"
+      "url": "/92a5c168525f1d4e9621e49a0cff5cbdc99f97d8.css?meteor_css_resource=true",
+      "size": 262311,
+      "hash": "92a5c168525f1d4e9621e49a0cff5cbdc99f97d8"
     },
     {
-      "path": "04c3fd2d155d47719d0e319afdcda885a3ab5027.css",
+      "path": "654037bff9f86fac60dba8a04c56e85d58c36650.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/04c3fd2d155d47719d0e319afdcda885a3ab5027.css?meteor_css_resource=true",
-      "size": 9309,
-      "hash": "04c3fd2d155d47719d0e319afdcda885a3ab5027"
+      "url": "/654037bff9f86fac60dba8a04c56e85d58c36650.css?meteor_css_resource=true",
+      "size": 9139,
+      "hash": "654037bff9f86fac60dba8a04c56e85d58c36650"
     },
     {
       "path": "packages/fortawesome_fontawesome/upstream/fonts/fontawesome-webfont.eot",

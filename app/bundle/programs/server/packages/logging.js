@@ -302,7 +302,7 @@ Log.objFromText = function (line, override) {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                     //
-// ../../.1.1.17.196x3wm++os+web.browser+web.cordova/npm/node_modules/cli-color/packag //
+// ../../.1.1.17.iq3cb6++os+web.browser+web.cordova/npm/node_modules/cli-color/package //
 //                                                                                     //
 /////////////////////////////////////////////////////////////////////////////////////////
                                                                                        //

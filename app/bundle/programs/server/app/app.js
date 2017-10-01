@@ -2185,26 +2185,27 @@ var path = require('path');                                                     
                                                                                                                       //
 var Fiber = require('fibers');                                                                                        // 6
                                                                                                                       //
-Meteor.methods({                                                                                                      // 9
-    compressAndDownload: function (ids) {                                                                             // 10
-        check(Meteor.userId(), String);                                                                               // 11
-        check(ids, String);                                                                                           // 12
-        return new Promise(function (resolve) {                                                                       // 13
-            resolve(callAPICompressQueues(ids));                                                                      // 15
-        }).catch(function (er) {                                                                                      // 16
-            console.log(er);                                                                                          // 18
-            return null;                                                                                              // 19
-        });                                                                                                           // 20
-    }                                                                                                                 // 21
-});                                                                                                                   // 9
+var zip = require('node-zip')();                                                                                      // 7
                                                                                                                       //
-function callAPICompressQueues(ids) {                                                                                 // 24
-    var userId = Meteor.userId();                                                                                     // 25
-    userId = userId ? userId : Meteor.uuid();                                                                         // 26
-    var arIds = ids.split(",");                                                                                       // 27
+Meteor.methods({                                                                                                      // 10
+    compressAndDownload: function (ids) {                                                                             // 11
+        check(Meteor.userId(), String);                                                                               // 12
+        check(ids, String);                                                                                           // 13
+        return new Promise(function (resolve) {                                                                       // 14
+            resolve(callAPICompressQueues(ids));                                                                      // 16
+        }).catch(function (er) {                                                                                      // 17
+            console.log(er);                                                                                          // 19
+            return null;                                                                                              // 20
+        });                                                                                                           // 21
+    }                                                                                                                 // 22
+});                                                                                                                   // 10
                                                                                                                       //
-    if (arIds && arIds.length) {                                                                                      // 28
-        var zip = new require('node-zip')();                                                                          // 29
+function callAPICompressQueues(ids) {                                                                                 // 25
+    var userId = Meteor.userId();                                                                                     // 26
+    userId = userId ? userId : Meteor.uuid();                                                                         // 27
+    var arIds = ids.split(",");                                                                                       // 28
+                                                                                                                      //
+    if (arIds && arIds.length) {                                                                                      // 29
         var zipName = moment().format('DD_MM_YYYY_HH_mm_ss');                                                         // 30
         zipName += '.' + userId + '.zip';                                                                             // 31
         var zipPath = process.env.PWD + '/.uploads/zip/';                                                             // 32

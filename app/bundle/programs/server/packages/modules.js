@@ -85,6 +85,7 @@ install("tracker");
 install("minimongo", "meteor/minimongo/minimongo_server.js");
 install("check", "meteor/check/match.js");
 install("retry");
+install("callback-hook");
 install("ddp-common");
 install("ddp-client", "meteor/ddp-client/namespace.js");
 install("rate-limit");
@@ -94,7 +95,6 @@ install("routepolicy");
 install("boilerplate-generator", "meteor/boilerplate-generator/generator.js");
 install("webapp-hashing");
 install("webapp", "meteor/webapp/webapp_server.js");
-install("callback-hook");
 install("ddp-server");
 install("ddp");
 install("allow-deny");
@@ -794,8 +794,8 @@ if (process.fiberLib) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                   //
 exports.name = "fs-extra";
-exports.version = "4.0.1";
-exports.main = "./lib/index";
+exports.version = "4.0.2";
+exports.main = "./lib/index.js";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -829,6 +829,36 @@ assign(fs, require('./output'))
 assign(fs, require('./path-exists'))
 
 module.exports = fs
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}}},"node-zip":{"package.json":function(require,exports){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                //
+// node_modules/node-zip/package.json                                                                             //
+//                                                                                                                //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                  //
+exports.name = "node-zip";
+exports.version = "1.1.1";
+exports.main = "lib/nodezip.js";
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"lib":{"nodezip.js":function(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                //
+// node_modules/node-zip/lib/nodezip.js                                                                           //
+//                                                                                                                //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                  //
+var fs = require('fs');
+var JSZip = require('jszip');
+
+global.JSZip = JSZip;
+module.exports = function(data, options) { return new JSZip(data, options) };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
