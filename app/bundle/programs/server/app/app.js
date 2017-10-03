@@ -2201,50 +2201,51 @@ Meteor.methods({                                                                
 });                                                                                                                   // 10
                                                                                                                       //
 function callAPICompressQueues(ids) {                                                                                 // 25
-    var userId = Meteor.userId();                                                                                     // 26
-    userId = userId ? userId : Meteor.uuid();                                                                         // 27
-    var arIds = ids.split(",");                                                                                       // 28
+    zip.files = {};                                                                                                   // 26
+    var userId = Meteor.userId();                                                                                     // 27
+    userId = userId ? userId : Meteor.uuid();                                                                         // 28
+    var arIds = ids.split(",");                                                                                       // 29
                                                                                                                       //
-    if (arIds && arIds.length) {                                                                                      // 29
-        var zipName = moment().format('DD_MM_YYYY_HH_mm_ss');                                                         // 30
-        zipName += '.' + userId + '.zip';                                                                             // 31
-        var zipPath = process.env.PWD + '/.uploads/zip/';                                                             // 32
-        var zipFullPath = zipPath + zipName;                                                                          // 33
-        var countFileAdded = 1;                                                                                       // 34
+    if (arIds && arIds.length) {                                                                                      // 30
+        var zipName = moment().format('DD_MM_YYYY_HH_mm_ss');                                                         // 31
+        zipName += '.' + userId + '.zip';                                                                             // 32
+        var zipPath = process.env.PWD + '/.uploads/zip/';                                                             // 33
+        var zipFullPath = zipPath + zipName;                                                                          // 34
+        var countFileAdded = 1;                                                                                       // 35
                                                                                                                       //
-        for (var i in meteorBabelHelpers.sanitizeForInObject(arIds)) {                                                // 35
-            var id = arIds[i];                                                                                        // 36
-            var document = Documents.findOne(id);                                                                     // 37
+        for (var i in meteorBabelHelpers.sanitizeForInObject(arIds)) {                                                // 36
+            var id = arIds[i];                                                                                        // 37
+            var document = Documents.findOne(id);                                                                     // 38
                                                                                                                       //
-            if (!document) {                                                                                          // 38
-                continue;                                                                                             // 39
-            } else {                                                                                                  // 40
-                var firstDoc = Configs.getFirstAttachmentOfDocumentToCompress(id);                                    // 41
-                var firstDocName = countFileAdded.toString() + '_' + firstDoc.name;                                   // 42
-                var firstDocFullPath = firstDoc.fullPath;                                                             // 43
+            if (!document) {                                                                                          // 39
+                continue;                                                                                             // 40
+            } else {                                                                                                  // 41
+                var firstDoc = Configs.getFirstAttachmentOfDocumentToCompress(id);                                    // 42
+                var firstDocName = countFileAdded.toString() + '_' + firstDoc.name;                                   // 43
+                var firstDocFullPath = firstDoc.fullPath;                                                             // 44
                                                                                                                       //
-                if (firstDoc) {                                                                                       // 44
-                    zip.file(firstDocName, fs.readFileSync(firstDocFullPath));                                        // 45
-                    countFileAdded++;                                                                                 // 46
-                }                                                                                                     // 47
-            }                                                                                                         // 48
-        }                                                                                                             // 49
+                if (firstDoc) {                                                                                       // 45
+                    zip.file(firstDocName, fs.readFileSync(firstDocFullPath));                                        // 46
+                    countFileAdded++;                                                                                 // 47
+                }                                                                                                     // 48
+            }                                                                                                         // 49
+        }                                                                                                             // 50
                                                                                                                       //
-        if (countFileAdded > 1) {                                                                                     // 50
-            var data = zip.generate({                                                                                 // 51
-                base64: false,                                                                                        // 51
-                compression: 'DEFLATE'                                                                                // 51
-            });                                                                                                       // 51
-            fs.writeFileSync(zipFullPath, data, 'binary');                                                            // 52
-            var urlDownload = Meteor.absoluteUrl.defaultOptions.rootUrl + 'upload/zip/' + zipName;                    // 53
-            return urlDownload;                                                                                       // 54
-        } else {                                                                                                      // 55
-            return null;                                                                                              // 56
-        }                                                                                                             // 57
-    } else {                                                                                                          // 58
-        return null;                                                                                                  // 59
-    }                                                                                                                 // 60
-}                                                                                                                     // 61
+        if (countFileAdded > 1) {                                                                                     // 51
+            var data = zip.generate({                                                                                 // 52
+                base64: false,                                                                                        // 52
+                compression: 'DEFLATE'                                                                                // 52
+            });                                                                                                       // 52
+            fs.writeFileSync(zipFullPath, data, 'binary');                                                            // 53
+            var urlDownload = Meteor.absoluteUrl.defaultOptions.rootUrl + 'upload/zip/' + zipName;                    // 54
+            return urlDownload;                                                                                       // 55
+        } else {                                                                                                      // 56
+            return null;                                                                                              // 57
+        }                                                                                                             // 58
+    } else {                                                                                                          // 59
+        return null;                                                                                                  // 60
+    }                                                                                                                 // 61
+}                                                                                                                     // 62
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"config-upload-server":{"init.js":function(require,exports,module){
