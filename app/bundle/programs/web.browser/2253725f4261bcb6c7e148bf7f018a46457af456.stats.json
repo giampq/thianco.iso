@@ -3,8 +3,8 @@
     "name": "standard-minifier-js",
     "version": "2.1.2"
   },
-  "totalMinifiedBytes": 1293048,
-  "totalMinifiedGzipBytes": 350388,
+  "totalMinifiedBytes": 1295168,
+  "totalMinifiedGzipBytes": 350579,
   "minifiedBytesByPackage": {
     "packages/meteor.js": 8650,
     "packages/meteor-base.js": 68,
@@ -882,7 +882,7 @@
     "packages/autoupdate.js": 1998,
     "packages/global-imports.js": 1279,
     "app/app.js": [
-      221780,
+      223900,
       {
         "client": {
           "templates": {
@@ -912,8 +912,8 @@
               "addfav.js": 679
             },
             "alldocuments": {
-              "template.alldocuments.js": 12624,
-              "alldocuments.js": 3414
+              "template.alldocuments.js": 12927,
+              "alldocuments.js": 3589
             },
             "allfavs": {
               "template.allfavs.js": 4128,
@@ -976,8 +976,8 @@
               "queues.js": 484
             },
             "quickadddoc": {
-              "template.quickadddoc.js": 5595,
-              "quickadddoc.js": 1500
+              "template.quickadddoc.js": 6790,
+              "quickadddoc.js": 1648
             },
             "reminds": {
               "template.reminds.js": 5867,
@@ -1006,7 +1006,7 @@
             "config.js": 184
           },
           "helpers": {
-            "helpers.js": 2350
+            "helpers.js": 2593
           }
         },
         "lib": {
@@ -1017,7 +1017,7 @@
             "document.attachment.js": 535,
             "document.remind.js": 66,
             "documents.in.remind.js": 73,
-            "documents.js": 5656,
+            "documents.js": 5712,
             "favorites.js": 1481,
             "hashtags.js": 1773,
             "iddoc.in.fav.js": 1744,

@@ -758,70 +758,71 @@ if (Meteor.isServer) {                                                          
                                     check(data, {                                                                     // 197
                                         branch: Match.Optional(Match.OneOf(undefined, null, Array)),                  // 198
                                         category: Match.Optional(Match.OneOf(undefined, null, String)),               // 199
-                                        page_uuid: String                                                             // 200
+                                        page_uuid: String,                                                            // 200
+                                        hashtags: Match.Optional(Match.OneOf(undefined, null, Array))                 // 201
                                     });                                                                               // 197
-                                    user = Meteor.userId();                                                           // 202
-                                    Fiber = require('fibers');                                                        // 203
-                                    Fiber(function () {                                                               // 204
-                                        //get all attachment in page uuid                                             // 205
-                                        Uploads.find({                                                                // 206
-                                            'uuid_page': data.page_uuid                                               // 206
-                                        }).fetch().map(function (el, idx) {                                           // 206
-                                            var name = el.path;                                                       // 207
+                                    user = Meteor.userId();                                                           // 203
+                                    Fiber = require('fibers');                                                        // 204
+                                    Fiber(function () {                                                               // 205
+                                        //get all attachment in page uuid                                             // 206
+                                        Uploads.find({                                                                // 207
+                                            'uuid_page': data.page_uuid                                               // 207
+                                        }).fetch().map(function (el, idx) {                                           // 207
+                                            var name = el.path;                                                       // 208
                                                                                                                       //
-                                            var document = _.extend(data, {                                           // 208
-                                                id_owner: user._id,                                                   // 209
-                                                date_create: new Date().getTime(),                                    // 210
-                                                name: name,                                                           // 211
-                                                name_search: StrFunc.strWithoutSpec(name),                            // 212
-                                                firstAttachment: el.key_unique                                        // 213
-                                            });                                                                       // 208
+                                            var document = _.extend(data, {                                           // 209
+                                                id_owner: user._id,                                                   // 210
+                                                date_create: new Date().getTime(),                                    // 211
+                                                name: name,                                                           // 212
+                                                name_search: StrFunc.strWithoutSpec(name),                            // 213
+                                                firstAttachment: el.key_unique                                        // 214
+                                            });                                                                       // 209
                                                                                                                       //
-                                            var p = new Promise(function (rs, rj) {                                   // 215
-                                                rs(Documents.insert(document));                                       // 216
-                                            });                                                                       // 217
-                                            p.then(function (idDoc) {                                                 // 219
-                                                if (idDoc) {                                                          // 220
-                                                    var folderUpload = process.env.PWD + '/.uploads/';                // 221
-                                                    var base = process.env.PWD + '/.uploads/' + idDoc;                // 222
+                                            var p = new Promise(function (rs, rj) {                                   // 216
+                                                rs(Documents.insert(document));                                       // 217
+                                            });                                                                       // 218
+                                            p.then(function (idDoc) {                                                 // 220
+                                                if (idDoc) {                                                          // 221
+                                                    var folderUpload = process.env.PWD + '/.uploads/';                // 222
+                                                    var base = process.env.PWD + '/.uploads/' + idDoc;                // 223
                                                                                                                       //
-                                                    var mkdirp = require('mkdirp');                                   // 223
+                                                    var mkdirp = require('mkdirp');                                   // 224
                                                                                                                       //
-                                                    var fs = require('fs-extra');                                     // 224
+                                                    var fs = require('fs-extra');                                     // 225
                                                                                                                       //
-                                                    mkdirp(base, function (err) {                                     // 225
-                                                        if (err) {                                                    // 226
-                                                            console.log(err);                                         // 227
-                                                        } else {                                                      // 228
-                                                            console.log('create new folder: ' + base);                // 229
-                                                            console.log('save attachment');                           // 230
-                                                            var pathFileUpload = folderUpload + el.path;              // 231
-                                                            var newPathFile = base + '/' + el.new_name;               // 232
-                                                            fs.copy(pathFileUpload, newPathFile).then(function () {   // 233
-                                                                console.log('copy');                                  // 235
-                                                                var attachment = el;                                  // 236
-                                                                var oldImageId = attachment._id;                      // 237
-                                                                delete attachment._id;                                // 238
-                                                                attachment.pathReactive = idDoc + '/' + el.path;      // 239
-                                                                attachment.idDocument = idDoc;                        // 240
-                                                                attachment.isDefault = true;                          // 241
-                                                                Meteor.call('addNewAttachment', attachment);          // 242
-                                                                Meteor.call('deleteFile', {                           // 243
-                                                                    _id: oldImageId                                   // 243
-                                                                });                                                   // 243
-                                                            }).catch(function (err) {                                 // 244
-                                                                return console.error(err);                            // 244
-                                                            });                                                       // 244
-                                                        }                                                             // 245
-                                                    });                                                               // 246
-                                                }                                                                     // 247
-                                            });                                                                       // 248
-                                            p.catch(function (e) {                                                    // 250
-                                                console.log(e);                                                       // 251
-                                            });                                                                       // 252
-                                            return p;                                                                 // 253
-                                        });                                                                           // 254
-                                    }).run();                                                                         // 255
+                                                    mkdirp(base, function (err) {                                     // 226
+                                                        if (err) {                                                    // 227
+                                                            console.log(err);                                         // 228
+                                                        } else {                                                      // 229
+                                                            console.log('create new folder: ' + base);                // 230
+                                                            console.log('save attachment');                           // 231
+                                                            var pathFileUpload = folderUpload + el.path;              // 232
+                                                            var newPathFile = base + '/' + el.new_name;               // 233
+                                                            fs.copy(pathFileUpload, newPathFile).then(function () {   // 234
+                                                                console.log('copy');                                  // 236
+                                                                var attachment = el;                                  // 237
+                                                                var oldImageId = attachment._id;                      // 238
+                                                                delete attachment._id;                                // 239
+                                                                attachment.pathReactive = idDoc + '/' + el.path;      // 240
+                                                                attachment.idDocument = idDoc;                        // 241
+                                                                attachment.isDefault = true;                          // 242
+                                                                Meteor.call('addNewAttachment', attachment);          // 243
+                                                                Meteor.call('deleteFile', {                           // 244
+                                                                    _id: oldImageId                                   // 244
+                                                                });                                                   // 244
+                                                            }).catch(function (err) {                                 // 245
+                                                                return console.error(err);                            // 245
+                                                            });                                                       // 245
+                                                        }                                                             // 246
+                                                    });                                                               // 247
+                                                }                                                                     // 248
+                                            });                                                                       // 249
+                                            p.catch(function (e) {                                                    // 251
+                                                console.log(e);                                                       // 252
+                                            });                                                                       // 253
+                                            return p;                                                                 // 254
+                                        });                                                                           // 255
+                                    }).run();                                                                         // 256
                                                                                                                       //
                                 case 5:                                                                               // 195
                                 case "end":                                                                           // 195
@@ -837,7 +838,7 @@ if (Meteor.isServer) {                                                          
             return _callee5;                                                                                          // 195
         }()                                                                                                           // 195
     });                                                                                                               // 194
-}                                                                                                                     // 258
+}                                                                                                                     // 259
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"favorites.js":function(require){
